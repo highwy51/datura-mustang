@@ -104,7 +104,7 @@
                 @endif
 				@if(Auth::check() && Auth::user()->hasPower('manage_characters'))
                     <div class="mt-3">
-                        <a href="#" class="btn btn-outline-info btn-sm edit-notes" data-id="{{ $image->id }}"><i class="fas fa-cog"></i> Add bio.</a>
+                        <a href="#" class="btn btn-outline-info btn-sm edit-notes" data-id="{{ $image->id }}"><i class="fas fa-cog"></i> Add bio</a>
                     </div>
 				@endif
             </div>
