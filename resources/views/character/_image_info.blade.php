@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Art<b></h6></div>
+                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Art</b></h6></div>
                     <div class="col-lg-8 col-md-6 col-8">
                         @foreach($image->artists as $artist)
                             <div>{!! $artist->displayLink() !!}</div>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Created<b></h6></div>
+                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Created</b></h6></div>
                 </div>
 
                 @if(Auth::check() && Auth::user()->hasPower('manage_characters'))
