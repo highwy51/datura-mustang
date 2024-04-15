@@ -118,6 +118,7 @@
                             <div>{!! $artist->displayLink() !!}</div>
                         @endforeach
                     </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-4"><h5>Created</h5></div>
                 </div>
