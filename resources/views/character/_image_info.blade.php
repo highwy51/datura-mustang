@@ -104,7 +104,7 @@
             <div class="tab-pane fade" id="credits-{{ $image->id }}">
 
                 <div class="row mb-2">
-                    <div class="col-lg-4 col-md-6 col-4"><h5>Design</h5></div>
+                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Design</b></h6></div>
                     <div class="col-lg-8 col-md-6 col-8">
                         @foreach($image->designers as $designer)
                             <div>{!! $designer->displayLink() !!}</div>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h5>Art</h5></div>
+                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Art<b></h6></div>
                     <div class="col-lg-8 col-md-6 col-8">
                         @foreach($image->artists as $artist)
                             <div>{!! $artist->displayLink() !!}</div>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h5>Created</h5></div>
+                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Created<b></h6></div>
                 </div>
 
                 @if(Auth::check() && Auth::user()->hasPower('manage_characters'))
