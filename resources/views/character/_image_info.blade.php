@@ -119,11 +119,7 @@
                         @endforeach
                     </div>
                 <div class="row">
-                <div class="col-lg-4 col-md-6 col-4"><h5>Created</h5></div>
-                <div class="col-lg-8 col-md-6 col-8">
-                    @foreach()
-                    @endforeach
-                <div>
+                    <div class="col-lg-4 col-md-6 col-4"><h5>Created</h5></div>
                 </div>
 
                 @if(Auth::check() && Auth::user()->hasPower('manage_characters'))
