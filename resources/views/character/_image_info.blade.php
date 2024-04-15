@@ -123,6 +123,7 @@
                 <div class="col-lg-8 col-md-6 col-8">
                     @foreach()
                     @endforeach
+                <div>
                 </div>
 
                 @if(Auth::check() && Auth::user()->hasPower('manage_characters'))
