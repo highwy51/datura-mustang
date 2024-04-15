@@ -31,23 +31,14 @@
 
             {{-- Basic info  --}}
             <div class="tab-pane fade show active" id="info-{{ $image->id }}">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h5>Species</h5></div>
-                    <div class="col-lg-8 col-md-6 col-8">{!! $image->species_id ? $image->species->displayName : 'None' !!}</div>
-                </div>
                 @if($image->subtype_id)
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-4"><h5>Subtype</h5></div>
-                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
+                        <div class="col-lg-4 col-md-6 col-4"><h5>Sub-breed</h5></div>
+                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subbreed_id ? $image->subbreed->displayName : 'None' !!}</div>
                     </div>
                 @endif
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h5>Rarity</h5></div>
-                    <div class="col-lg-8 col-md-6 col-8">{!! $image->rarity_id ? $image->rarity->displayName : 'None' !!}</div>
-                </div>
-
                 <div class="mb-3">
-                    <div><h5>Traits</h5></div>
+                    <div><h5>Phenotype Traits</h5></div>
                     @if(Config::get('lorekeeper.extensions.traits_by_category'))
                         <div>
                             @php $traitgroup = $image->features()->get()->groupBy('feature_category_id') @endphp
@@ -65,7 +56,7 @@
                                 </div>
                                 @endforeach
                             @else
-                                <div>No traits listed.</div>
+                                <div>No phenotype traits listed.</div>
                             @endif
                         </div>
                     @else
@@ -76,7 +67,7 @@
                                     <div>@if($feature->feature->feature_category_id) <strong>{!! $feature->feature->category->displayName !!}:</strong> @endif {!! $feature->feature->displayName !!} @if($feature->data) ({{ $feature->data }}) @endif</div>
                                 @endforeach
                             @else
-                                <div>No traits listed.</div>
+                                <div>No phenotype traits listed.</div>
                             @endif
                         </div>
                     @endif
@@ -127,6 +118,11 @@
                             <div>{!! $artist->displayLink() !!}</div>
                         @endforeach
                     </div>
+                <div class="row">
+                <div class="col-lg-4 col-md-6 col-4"><h5>Created</h5></div>
+                <div class="col-lg-8 col-md-6 col-8">
+                    @foreach()
+                    @endforeach
                 </div>
 
                 @if(Auth::check() && Auth::user()->hasPower('manage_characters'))
