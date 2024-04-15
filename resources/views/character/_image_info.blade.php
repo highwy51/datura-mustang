@@ -33,12 +33,12 @@
             <div class="tab-pane fade show active" id="info-{{ $image->id }}">
                 @if($image->subtype_id)
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-4"><h5>Sub-breed</h5></div>
+                        <div class="col-lg-4 col-md-6 col-4"><h6><b>Sub-breed</b></h6></div>
                         <div class="col-lg-8 col-md-6 col-8">{!! $image->subbreed_id ? $image->subbreed->displayName : 'None' !!}</div>
                     </div>
                 @endif
                 <div class="mb-3">
-                    <div><h5>Phenotype Traits</h5></div>
+                    <div><h6><b>Phenotype Traits</b></h6></div>
                     @if(Config::get('lorekeeper.extensions.traits_by_category'))
                         <div>
                             @php $traitgroup = $image->features()->get()->groupBy('feature_category_id') @endphp
