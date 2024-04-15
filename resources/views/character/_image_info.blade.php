@@ -34,7 +34,7 @@
                 @if($image->subtype_id)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4"><h6><b>Sub-breed</b></h6></div>
-                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subbreed_id ? $image->subbreed->displayName : 'None' !!}</div>
+                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
                     </div>
                 @endif
                 <div class="mb-3">
