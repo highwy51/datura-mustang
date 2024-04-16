@@ -91,7 +91,7 @@
 
                 <div class="mb-3">
                     <div>
-                        <h5>Traits</h5>
+                        <h6><b>Traits</b></h6>
                     </div>
                     @if (config('lorekeeper.extensions.traits_by_category'))
                         <div>
