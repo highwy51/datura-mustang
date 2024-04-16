@@ -103,19 +103,21 @@
                             @endphp
                             @if ($image->features()->count())
                                 @foreach ($traitgroup as $key => $group)
-                                    <div class="mb-2">
+                                    <!-- <div class="mb-2">
                                         @if ($key)
                                             <strong>{!! $group->first()->feature->category->displayName !!}:</strong>
                                         @else
                                             <strong>Miscellaneous:</strong>
                                         @endif
-                                        @foreach ($group as $feature)
-                                            <div class="ml-md-2">{!! $feature->feature->displayName !!} @if ($feature->data)
-                                                    ({{ $feature->data }})
+                                        @foreach ($group as $feature) -->
+                                            <!-- <div class="ml-md-2"> -->
+                                            {!! $feature->feature->displayName !!}
+                                            <!-- @if ($feature->data) -->
+                                                    <!-- ({{ $feature->data }})
                                                 @endif
                                             </div>
                                         @endforeach
-                                    </div>
+                                    </div> -->
                                 @endforeach
                             @else
                                 <div>No phenotype traits listed.</div>
