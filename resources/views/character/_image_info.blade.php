@@ -102,10 +102,8 @@
                                     ->groupBy('feature_category_id');
                             @endphp
                             @if ($image->features()->count())
-                                @foreach ($traitgroup as $key => $group)
-                                    <div>          
-                                {!! $feature->feature->displayName !!}
-                                    </div>
+                                @foreach ($traitgroup as $key => $group)         
+                                    {!! $feature->feature->displayName !!}
                                 @endforeach
                             @else
                                 <div>No phenotype traits listed.</div>
