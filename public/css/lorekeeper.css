@@ -110,10 +110,13 @@ main > .row {
 .navbar .navbar-brand, .navbar .nav-item {
     text-transform: uppercase;
     font-family: Roboto Condensed, serif;
-    background-color: #831a03;
 }
 
 .navbar .row { width: 100%; }
+
+.navbar {
+    background-color: #831a03
+}
 
 /* Sidebar */
 
