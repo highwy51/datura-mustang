@@ -176,7 +176,7 @@
 
                 <div class="row mb-2">
                     <div class="col-lg-4 col-md-6 col-4">
-                        <h5>Design</h5>
+                        <h6><b>Design</b></h6>
                     </div>
                     <div class="col-lg-8 col-md-6 col-8">
                         @foreach ($image->designers as $designer)
@@ -186,7 +186,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-4">
-                        <h5>Art</h5>
+                        <h6><b>Art</b></h6>
                     </div>
                     <div class="col-lg-8 col-md-6 col-8">
                         @foreach ($image->artists as $artist)
