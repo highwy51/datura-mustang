@@ -114,6 +114,10 @@ main > .row {
 
 .navbar .row { width: 100%; }
 
+.bg-dark {
+    background-color: #831a03 !important;
+}
+
 /* Sidebar */
 
 .sidebar {
