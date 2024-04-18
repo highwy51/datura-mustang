@@ -20,7 +20,7 @@
 @endif
 
 <p>
-    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum breeding slots{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available to create.
+    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum breeding slot{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available to create.
     @if(Auth::check() && (Auth::user()->id == $character->user_id))
         As the character's owner, you may create and grant to other users up to this many breeding slots. Other users may see how many of this character's breeding slots have been created and/or used, and to whom they have been granted.
     @else
