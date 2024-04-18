@@ -15,16 +15,16 @@
 
 @if(Auth::check() && (Auth::user()->id == $character->user_id))
     <div class="text-right mb-4">
-        <a href="#" class="btn btn-success create-breeding-permission">Create New Permission</a>
+        <a href="#" class="btn btn-success create-breeding-permission">Create New Slot</a>
     </div>
 @endif
 
 <p>
-    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum breeding permission{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available to create.
+    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum breeding slots{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available to create.
     @if(Auth::check() && (Auth::user()->id == $character->user_id))
-        As the character's owner, you may create and grant to other users up to this many breeding permissions. Other users may see how many of this character's breeding permissions have been created and/or used, and to whom they have been granted.
+        As the character's owner, you may create and grant to other users up to this many breeding slots. Other users may see how many of this character's breeding slots have been created and/or used, and to whom they have been granted.
     @else
-        Only the character's owner can create and distribute breeding permissions.
+        Only the character's owner can create and distribute breeding slots.
     @endif
 </p>
 
@@ -37,7 +37,7 @@
 
     {!! $permissions->render() !!}
 @else
-    <p>No permissions found.</p>
+    <p>No used slots found.</p>
 @endif
 
 @endsection
