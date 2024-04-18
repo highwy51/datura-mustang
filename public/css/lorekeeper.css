@@ -104,7 +104,7 @@ main > .row {
 .site-header-image {
     /*background-color: #eee;*/
     background-repeat: repeat;
-    min-height: 200px;
+    min-height: 400px;
 }
 
 .navbar .navbar-brand, .navbar .nav-item {
