@@ -114,7 +114,6 @@ class CharacterController extends Controller {
             return $next($request);
         });
     }
-}
 
     /**
      * Shows a character's masterlist entry.
@@ -302,8 +301,8 @@ class CharacterController extends Controller {
      * @param  string                         $slug
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getCharacterBreedingPermissions(Request $request, $slug)
-    {
+    public function getCharacterBreedingPermissions(Request $request, $slug) {
+        
         return view('character.breeding_permissions', [
             'character' => $this->character,
             'permissions' => $this->character->breedingPermissions()->orderBy('is_used')->paginate(20)->appends($request->query())
@@ -316,9 +315,9 @@ class CharacterController extends Controller {
      * @param  string  $slug
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getNewBreedingPermission($slug)
-    {
+    public function getNewBreedingPermission($slug) {
         if(!Auth::check() || $this->character->user_id != Auth::user()->id) abort(404);
+        
 
         return view('character._create_edit_breeding_permission', [
             'character' => $this->character,
@@ -334,8 +333,7 @@ class CharacterController extends Controller {
      * @param  int     $id
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getTransferBreedingPermission($slug, $id)
-    {
+    public function getTransferBreedingPermission($slug, $id) {
         $permission = BreedingPermission::where('id', $id)->first();
         if(!Auth::check() || !$permission || ($permission->recipient_id != Auth::user()->id && !Auth::user()->hasPower('manage_characters')))
             abort(404);
@@ -710,3 +708,4 @@ class CharacterController extends Controller {
 
         return redirect()->back();
     }
+}
