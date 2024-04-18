@@ -18,7 +18,7 @@
                             @endif
                         </div>
                     @endif
-                    Breeding Permission #{{ $permission->id }}
+                    Breeding Slot #{{ $permission->id }}
                     @if($permission->is_used)
                         (Used)
                     @endif
