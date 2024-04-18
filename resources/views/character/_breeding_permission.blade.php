@@ -30,7 +30,6 @@
                         @if(!isset($isCharacter) || $isCharacter)
                             Granted to: {!! $permission->recipient->displayName !!} ・
                         @endif
-                        Type: {{ $permission->type }}
                     </small>
                 </h5>
 
