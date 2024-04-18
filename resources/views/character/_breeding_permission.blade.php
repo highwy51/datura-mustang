@@ -28,7 +28,7 @@
                     <small>
                         <br/>
                         @if(!isset($isCharacter) || $isCharacter)
-                            Granted to: {!! $permission->recipient->displayName !!} ・
+                            Granted to: {!! $permission->recipient->displayName !!}
                         @endif
                     </small>
                 </h5>
