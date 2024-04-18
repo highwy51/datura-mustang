@@ -32,7 +32,7 @@ return [
     'character_status_badges'              => 0,
 
     // Character TH Profile Link - Juni
-    'character_TH_profile_link'            => 0,
+    'character_TH_profile_link'            => 1,
 
     // Design Update Voting - Mercury
     'design_update_voting'                 => 0,
@@ -70,8 +70,8 @@ return [
 
     // Staff Rewards - Mercury
     'staff_rewards'                        => [
-        'enabled'     => 0,
-        'currency_id' => 1,
+        'enabled'     => 1,
+        'currency_id' => 2,
     ],
 
     // Organised Traits Dropdown - Draginraptor
