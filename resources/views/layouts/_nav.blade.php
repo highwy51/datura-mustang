@@ -173,6 +173,20 @@
                             <a class="dropdown-item" href="{{ url('account/bookmarks') }}">
                                 Bookmarks
                             </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url('characters') }}">
+                                My Characters
+                            </a>
+                            <a class="dropdown-item" href="{{ url('breeding-permissions') }}">
+                                My Breeding Slots
+                            </a>
+                            <a class="dropdown-item" href="{{ url('inventory') }}">
+                                Inventory
+                            </a>
+                            <a class="dropdown-item" href="{{ url('bank') }}">
+                                Bank
+                            </a>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('account/settings') }}">
                                 Settings
                             </a>
