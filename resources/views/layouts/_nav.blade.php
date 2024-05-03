@@ -110,7 +110,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a id="loreDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        World
+                        Lore
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="loreDropdown">
