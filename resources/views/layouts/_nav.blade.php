@@ -85,7 +85,7 @@
                 @endif
                 <li class="nav-item dropdown">
                     <a id="browseDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        Browse
+                        Masterlists
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="browseDropdown">
@@ -95,17 +95,11 @@
                         <a class="dropdown-item" href="{{ url('masterlist') }}">
                             Character Masterlist
                         </a>
-                        <a class="dropdown-item" href="{{ url('myos') }}">
-                            MYO Slot Masterlist
-                        </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url('raffles') }}">
                             Raffles
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url('reports/bug-reports') }}">
-                            Bug Reports
-                        </a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
