@@ -9,3 +9,7 @@
 
 
 @endsection
+
+@section('sidebar')
+    @include('howtoplay._sidebar')
+@endsection
