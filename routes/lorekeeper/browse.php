@@ -181,5 +181,5 @@ Route::group(['prefix' => 'reports', 'namespace' => 'Users'], function () {
 /**************************************************************************************************
     Custom
 **************************************************************************************************/
-Route::get('HTP', 'HowToPlayController@getHTP');
 Route::get('howtoplay', 'HowToPlayController@getHowToPlay');
+Route::get('HTP', 'HowToPlayController@getHTP');
