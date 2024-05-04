@@ -19,7 +19,7 @@
                 </li>
                 @if (Auth::check())
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ url('gallery') }}">How To Play</a>
+                    <a class="nav-link" href="{{ url('howtoplay') }}">How To Play</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="queueDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
