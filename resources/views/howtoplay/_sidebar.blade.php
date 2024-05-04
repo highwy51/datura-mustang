@@ -1,4 +1,4 @@
-ul>
+<ul>
     <li class="sidebar-header"><a href="{{ url('howtoplay') }}" class="card-link">How To Play</a></li>
 
     @auth
