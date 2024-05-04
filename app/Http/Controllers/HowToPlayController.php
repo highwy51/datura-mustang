@@ -23,7 +23,7 @@ class HowToPlayController extends Controller
 
     public function getHTP() 
     {
-    return view('custom.howtoplay', [ 
+    return view('custom.HTP', [ 
     'page' => SitePage::where('key', 'howtoplay')->first()
         ]);
     }
