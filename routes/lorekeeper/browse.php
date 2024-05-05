@@ -55,6 +55,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'Users'], function () {
     Route::get('{name}/characters', 'UserController@getUserCharacters');
     Route::get('{name}/sublist/{key}', 'UserController@getUserSublist');
     Route::get('{name}/myos', 'UserController@getUserMyoSlots');
+    Route::get('{name}/breeding-permissions', 'UserController@getUserBreedingPermissions');
     Route::get('{name}/inventory', 'UserController@getUserInventory');
     Route::get('{name}/bank', 'UserController@getUserBank');
 
@@ -86,6 +87,7 @@ Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function ()
 
     # lineage
     Route::get('{slug}/lineage', 'CharacterLineageController@getCharacterLineage');
+    Route::get('{slug}/breeding-permissions', 'CharacterController@getCharacterBreedingPermissions');
 });
 
 Route::group(['prefix' => 'myo', 'namespace' => 'Characters'], function () {
@@ -175,3 +177,9 @@ Route::group(['prefix' => 'gallery'], function () {
 Route::group(['prefix' => 'reports', 'namespace' => 'Users'], function () {
     Route::get('/bug-reports', 'ReportController@getBugIndex');
 });
+
+/**************************************************************************************************
+    Custom
+**************************************************************************************************/
+Route::get('howtoplay', 'HowToPlayController@getHowToPlay');
+Route::get('HTP', 'HowToPlayController@getHTP');
