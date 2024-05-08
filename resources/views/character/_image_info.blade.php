@@ -36,18 +36,26 @@
 
             {{-- Basic info --}}
             <div class="tab-pane fade show active" id="info-{{ $image->id }}">
-                @if ($image->nickname)
+                @if ($character->nickname)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
                             <h6><b>Nickname</b></h6>
                         </div>
-                        <div class="col-lg-8 col-md-6 col-8">{!! $image->nickname !!}</div>
+                        <div class="col-lg-8 col-md-6 col-8">{!! $character->nickname !!}</div>
                     </div>
                 @endif
                 @if ($image->subtype_id)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
                             <h6><b>Sub-breed</b></h6>
+                        </div>
+                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
+                    </div>
+                @endif
+                @if ($image->subtype_id)
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-4">
+                            <h6><b>Mutation Status</b></h6>
                         </div>
                         <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
                     </div>
@@ -110,11 +118,23 @@
                                     ->groupBy('feature_category_id');
                             @endphp
                             @if ($image->features()->count())
-                                @foreach ($traitgroup as $key => $group)         
-                                    {!! $feature->feature->displayName !!}
+                                @foreach ($traitgroup as $key => $group)
+                                    <div class="mb-2">
+                                        @if ($key)
+                                            <strong>{!! $group->first()->feature->category->displayName !!}:</strong>
+                                        @else
+                                            <strong>Miscellaneous:</strong>
+                                        @endif
+                                        @foreach ($group as $feature)
+                                            <div class="ml-md-2">{!! $feature->feature->displayName !!} @if ($feature->data)
+                                                    ({{ $feature->data }})
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 @endforeach
                             @else
-                                <div>No phenotype traits listed.</div>
+                                <div>No Phenotype traits listed.</div>
                             @endif
                         </div>
                     @else
@@ -134,7 +154,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                <div>No phenotype traits listed.</div>
+                                <div>No traits listed.</div>
                             @endif
                         </div>
                     @endif

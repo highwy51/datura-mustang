@@ -4,6 +4,10 @@
         {!! Form::label('Name') !!}
         {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
     </div>
+    <div class="form-group">
+        {!! Form::label('Nickname') !!}
+        {!! Form::text('nickname', $character->nickname, ['class' => 'form-control']) !!}
+    </div>
 @else
     <div class="row">
         <div class="col-md-6">

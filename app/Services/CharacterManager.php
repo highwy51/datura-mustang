@@ -1380,6 +1380,11 @@ class CharacterManager extends Service {
                     $result[] = 'name';
                     $old['name'] = $character->name;
                     $new['name'] = $characterData['name'];
+                } dd($characterData['nickname']);
+                if ($characterData['nickname'] != $character->nickname) {
+                    $result[] = 'nickname';
+                    $old['nickname'] = $character->nickname;
+                    $new['nickname'] = $characterData['nickname'];
                 }
             }
             if ($characterData['is_sellable'] != $character->is_sellable) {
@@ -1542,6 +1547,7 @@ class CharacterManager extends Service {
             // Update the character's profile
             if (!$character->is_myo_slot) {
                 $character->name = $data['name'];
+                $character->nickname = $data['nickname'];
             }
             $character->save();
 

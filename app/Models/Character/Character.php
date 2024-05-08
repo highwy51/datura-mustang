@@ -107,6 +107,7 @@ class Character extends Model {
         'slug'                  => 'required',
         'description'           => 'nullable',
         'sale_value'            => 'nullable',
+        'nickname' => 'nullable|between:3,25',
     ];
 
     /**

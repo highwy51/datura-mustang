@@ -9,7 +9,7 @@
 
     @include('character.design._header', ['request' => $request])
 
-    <h2>Masterlist Image</h2>
+    <h2>Tracking Image</h2>
 
     @if ($request->has_image)
         <div class="card mb-3">
@@ -62,7 +62,7 @@
 
     @if (($request->status == 'Draft' && $request->user_id == Auth::user()->id) || ($request->status == 'Pending' && Auth::user()->hasPower('manage_characters')))
         @if ($request->status == 'Draft' && $request->user_id == Auth::user()->id)
-            <p>Select the image you would like to use on the masterlist and an optional thumbnail. Please only upload images that you are allowed to use AND are able to credit to the artist! Note that while staff members cannot edit your uploaded image,
+            <p>Select the file you would like to use as a tracking image and an optional thumbnail. Please only upload images that you are allowed to use AND are able to credit to the artist! Note that while staff members cannot edit your uploaded image,
                 they may choose to recrop or upload a different thumbnail.</p>
         @else
             <p>As a staff member, you may modify the thumbnail of the uploaded image and/or the credits, but not the image itself. If you have recropped the thumbnail, you may need to hard refresh to see the new one.</p>

@@ -29,13 +29,17 @@
 
     {!! Form::open(['url' => $character->url . '/profile/edit']) !!}
     @if (!$character->is_myo_slot)
+            <div class="form-group">
+                {!! Form::label('name', 'Name') !!}
+                {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
+            </div>
         <div class="form-group">
-            {!! Form::label('name', 'Name') !!}
-            {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
+            {!! Form::label('nickname','Nickname') !!}
+            {!! Form::text('nickname', $character->nickname, ['class' => 'form-control']) !!}
         </div>
         @if (config('lorekeeper.extensions.character_TH_profile_link'))
             <div class="form-group">
-                {!! Form::label('link', 'Profile Link') !!}
+                {!! Form::label('link', 'Toyhouse Link') !!}
                 {!! Form::text('link', $character->profile->link, ['class' => 'form-control']) !!}
             </div>
         @endif

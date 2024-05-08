@@ -4,7 +4,7 @@
     @auth
         <li class="sidebar-section">
             <div class="sidebar-section-header">New Players</div>
-            <div class="sidebar-item"><a href="{{ url('gallery/submissions/pending') }}" class="{{ set_active('gallery/submissions*') }}">Getting Started</a></div>
+            <div class="sidebar-item"><a href="{{ url('/howtoplay/gettingstarted') }}" class="{{ set_active('howtoplay/gettingstarted*') }}">Getting Started</a></div>
             <div class="sidebar-item"><a href="{{ url('user/' . Auth::user()->name . '/gallery') }}" class="{{ set_active('user/' . Auth::user()->name . '/gallery') }}">Obtaining Daturas</a></div>
             <div class="sidebar-item"><a href="{{ url('user/' . Auth::user()->name . '/favorites') }}" class="{{ set_active('user/' . Auth::user()->name . '/favorites') }}">Etc</a></div>
         </li>
