@@ -173,6 +173,24 @@
                 @endif
             </div>
 
+            <!-- Phenotype Testing -->
+
+            <div class="mb-3">
+                    <div>
+                        <h6><b>Phenotype</b></h6>
+                    </div>
+                    <div>
+                        @php
+                                $traitgroup = $image
+                                    ->features()
+                                    ->get()
+                                    ->groupBy('feature_category_id');
+                        @endphp
+                    </div>
+            </div>
+
+              <!-- End Test -->
+
             {{-- Image notes --}}
             <div class="tab-pane fade" id="notes-{{ $image->id }}">
                 @if ($image->parsed_description)
