@@ -42,24 +42,8 @@
                             <h6><b>Nickname</b></h6>
                         </div>
                         <div class="col-lg-8 col-md-6 col-8">{!! $character->nickname !!}</div>
+                @endif
                 
-            <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4">
-                        <h5>Class</h5>
-                    </div>
-                <div class="col-lg-8 col-md-6 col-8">{!! $image->character->class_id ? $image->character->class->displayName : 'None' !!}
-                    @if (Auth::check())
-                        @if (Auth::user()->isStaff || (Auth::user()->id == $image->character->user_id && $image->character->class_id == null))
-                            <a href="#" class="btn btn-outline-info btn-sm edit-class ml-1" data-id="{{ $image->character->id }}"><i class="fas fa-cog"></i></a>
-                        @endif
-                    @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-4">
-                    <h5>Species</h5>
-                </div>
-            </div>
                 @if ($image->subtype_id)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
@@ -84,76 +68,6 @@
                         <div class="col-lg-8 col-md-6 col-8">{!! $image->sex !!}</div>
                     </div>
                 @endif
-                @if (config('lorekeeper.character_pairing.colours'))
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-4">
-                            <h5>
-                                Colours
-                                @if ($image->character->is_myo_slot)
-                                    {!! add_help('These colours are created from the parents of the MYO slot. They are not editable until the MYO is created.') !!}
-                                @endif
-                            </h5>
-                        </div>
-                        <div class="col-lg-8 col-md-6 col-8">
-                            @if ($image->colours)
-                                <div class="{{ $image->character->is_myo_slot ? '' : 'row' }}">
-                                    {!! $image->displayColours() !!}
-                                    @if (Auth::check() && Auth::user()->hasPower('manage_characters') && !$image->character->is_myo_slot)
-                                        <div class="btn btn-outline-info btn-sm edit-image-colours ml-3 py-0" data-id="{{ $image->id }}">Edit</div>
-                                    @endif
-                                </div>
-                                @if (Auth::check() && Auth::user()->hasPower('manage_characters') && !$image->character->is_myo_slot)
-                                    <div class="collapse" id="colour-collapse-{{ $image->id }}">
-                                        @include('character.admin._edit_image_colours', ['image' => $image])
-                                    </div>
-                                @endif
-                            @else
-                                <div class="row">
-                                    <div>No colours listed.</div>
-                                    @if (Auth::check() && Auth::user()->hasPower('manage_characters') && !$image->character->is_myo_slot)
-                                        {!! Form::open(['url' => 'admin/character/image/' . $image->id . '/colours']) !!}
-                                        {!! Form::submit('Generate', ['class' => 'btn btn-outline-info btn-sm ml-3 py-0']) !!}
-                                        {!! Form::close() !!}
-                                    @endif
-                                    <div class="col-lg-8 col-md-6 col-8">{!! $image->rarity_id ? $image->rarity->displayName : 'None' !!}</div>
-                                </div>
-                @php
-                    // check if there is a type for this object if not passed
-                    // for characters first check subtype (since it takes precedence)
-                    $type = \App\Models\Element\Typing::where('typing_model', 'App\Models\Character\CharacterImage')
-                        ->where('typing_id', $image->id)
-                        ->first();
-                    if (!isset($type) && $image->subtype_id) {
-                        $type = \App\Models\Element\Typing::where('typing_model', 'App\Models\Species\Subtype')
-                            ->where('typing_id', $image->subtype_id)
-                            ->first();
-                    }
-                    if (!isset($type)) {
-                        $type = \App\Models\Element\Typing::where('typing_model', 'App\Models\Species\Species')
-                            ->where('typing_id', $image->species_id)
-                            ->first();
-                    }
-                    $type = $type ?? null;
-                @endphp
-                @if ($type || (Auth::check() && Auth::user()->hasPower('manage_characters')))
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-4">
-                            <h5>Typing</h5>
-                        </div>
-                        <div class="col-lg-8 col-md-6 col-8 row">
-                            <h5>{!! $type?->displayElements !!}</h5>
-                            @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
-                                {!! add_help('Typing is assigned on an image basis') !!}
-                                <div class="ml-auto">
-                                    <a href="#" class="btn btn-outline-info btn-sm edit-typing" data-id="{{ $image->id }}">
-                                        <i class="fas fa-cog"></i> {{ $type ? 'Edit' : 'Create' }}
-                                    </a>    
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                @endif
-
                 <div class="mb-3">
                     <div>
                         <h6><b>Phenotype</b></h6>
@@ -197,9 +111,10 @@
                                     <div>
                                         @if ($feature->feature->feature_category_id)
                                             <strong>{!! $feature->feature->category->displayName !!}:</strong>
-                                            @endif {!! $feature->feature->displayName !!} @if ($feature->data)
+                                        @endif {!! $feature->feature->displayName !!} 
+                                        @if ($feature->data)
                                                 ({{ $feature->data }})
-                                            @endif
+                                        @endif
                                     </div>
                                 @endforeach
                             @else
