@@ -7,7 +7,6 @@
 
 </h1>
 
-
 <div class="card mb-3" style="clear:both;">
     <div class="card-body">
         <div class="row mb-2 no-gutters">
@@ -125,10 +124,17 @@
                                         <tbody>
                                             @foreach (parseAssetData($character->data) as $key => $type)
                                                 @foreach ($type as $asset)
-                                                    <tr>
-                                                        <td>{!! $asset['asset']->displayName !!} ({!! ucfirst($key) !!})</td>
-                                                        <td>{{ $asset['quantity'] }}</td>
-                                                    </tr>
+                                                    @if ($key == 'exp' || $key == 'points')
+                                                        <tr>
+                                                            <td>{!! ucfirst($key) !!}</td>
+                                                            <td>{{ $type['quantity'] }}</td>
+                                                        </tr>
+                                                    @else
+                                                        <tr>
+                                                            <td>{!! $asset['asset']->displayName !!} ({!! ucfirst($key) !!})</td>
+                                                            <td>{{ $asset['quantity'] }}</td>
+                                                        </tr>
+                                                    @endif
                                                 @endforeach
                                             @endforeach
 
@@ -164,6 +170,7 @@
         @endforeach
     </div>
 </div>
+
 
 @if (isset($inventory['user_items']) && array_filter($inventory['user_items']))
     <div class="card mb-3">
