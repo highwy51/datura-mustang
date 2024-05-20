@@ -29,6 +29,52 @@
                     class="image img-fluid" alt="{{ $character->fullName }}" />
             </a>
         </div>
+    </div>
+
+{{-- Bio --}}
+<a class="float-left" href="{{ url('reports/new?url=') . $character->url . '/profile' }}"><i class="fas fa-exclamation-triangle" data-toggle="tooltip" title="Click here to report this character's profile." style="opacity: 50%;"></i></a>
+
+    @if(Auth::check() && ($character->user_id == Auth::user()->id || Auth::user()->hasPower('manage_characters')))
+         <div class="text-right mb-2">
+                <a href="{{ $character->url . '/profile/edit' }}" class="btn btn-outline-info btn-sm"><i class="fas fa-cog"></i> Edit Profile</a>
+        </div>
+    @endif
+    
+@if($character->profile->custom_values->count() > 0)
+    <div class="row no-gutters">
+        @php $valueGroups = $character->profile->custom_values->groupBy('group'); @endphp
+        @foreach($valueGroups as $groupName => $values)
+            <div class="col-12 mb-3">
+                <div class="card">
+                    @if($groupName)
+                        <div class="card-header">
+                            <h5 class="mb-0 mx-n1">{{ $values->first()->group }}</h5>
+                        </div>
+                    @endif
+                    <ul class="list-group list-group-flush">
+                        @foreach($values as $value)
+                            <li class="list-group-item px-3">
+                                <div class="row no-gutters align-items-center">
+                                    @if($value->name && $value->name != "")
+                                        <div class="col-4 col-md-3"><h6 class="mb-0" style="font-weight: bold;">{{ $value->name }}</h6></div>
+                                        <div class="col-8 col-md-9 pl-2">{!! $value->data_parsed !!}</div>
+                                    @else
+                                        <div class="col-12">{!! $value->data_parsed !!}</div>
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endif
+@if($character->profile->parsed_text)
+    <div class="card mb-3">
+        <div class="card-body parsed-text">
+                {!! $character->profile->parsed_text !!}
+        </div>
         @if ($character->image->canViewFull(Auth::check() ? Auth::user() : null) && file_exists(public_path($character->image->imageDirectory . '/' . $character->image->fullsizeFileName)))
             <div class="text-right">You are viewing the full-size image. <a href="{{ $character->image->imageUrl }}">View watermarked image</a>?</div>
         @endif

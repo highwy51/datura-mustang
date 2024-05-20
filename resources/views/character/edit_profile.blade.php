@@ -37,10 +37,48 @@
             {!! Form::label('nickname','Nickname') !!}
             {!! Form::text('nickname', $character->nickname, ['class' => 'form-control']) !!}
         </div>
-        @if (config('lorekeeper.extensions.character_TH_profile_link'))
+    @endif
+    @if (config('lorekeeper.extensions.character_TH_profile_link'))
             <div class="form-group">
                 {!! Form::label('link', 'Toyhouse Link') !!}
                 {!! Form::text('link', $character->profile->link, ['class' => 'form-control']) !!}
+            </div>
+    @endif
+    {!! Form::label('custom_values', "Custom Values") !!}
+    <div id="customValues">
+        @foreach ($character->profile->custom_values as $value)
+            <div class="form-row">
+                <div class="col-2 col-md-1 mb-2">
+                    <span class="btn btn-link drag-custom-value-row w-100"><i class="fas fa-arrows-alt-v"></i></span>
+                </div>
+                <div class="col-5 col-md-3 mb-2">
+                    {!! Form::text('custom_values_group[]', $value->group, ['class' => 'form-control', 'maxLength' => 50, 'placeholder' => "Group (Optional)"]) !!}
+                </div>
+                <div class="col-5 col-md-3 mb-2">
+                    {!! Form::text('custom_values_name[]', $value->name, ['class' => 'form-control', 'maxLength' => 50, 'placeholder' => "Title:"]) !!}
+                </div>
+                <div class="col-10 col-md-4 mb-3">
+                    {!! Form::text('custom_values_data[]', $value->data_parsed, ['class' => 'form-control', 'maxLength' => 150, 'placeholder' => "Custom Value"]) !!}
+                </div>
+                <div class="col-2 col-md-1 mb-3">
+                    <button class="btn btn-danger delete-custom-value-row w-100" type="button">x</button>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    <a href="#" class="add-custom-value-row btn btn-primary mb-3">Add Custom Value</a>
+@endif
+<div class="form-group">
+    {!! Form::label('text', 'Profile Content') !!}
+    {!! Form::textarea('text', $character->profile->text, ['class' => 'wysiwyg form-control']) !!}
+</div>
+
+@if($character->user_id == Auth::user()->id)
+    @if(!$character->is_myo_slot)
+        <div class="row">
+            <div class="col-md form-group">
+                {!! Form::label('is_gift_art_allowed', 'Allow Gift Art', ['class' => 'form-check-label mb-3']) !!} {!! add_help('This will place the character on the list of characters that can be drawn for gift art. This does not have any other functionality, but allow users looking for characters to draw to find your character easily.') !!}
+                {!! Form::select('is_gift_art_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_art_allowed, ['class' => 'form-control user-select']) !!}
             </div>
         @endif
     @endif
@@ -85,3 +123,49 @@
     {!! Form::close() !!}
 
 @endsection
+{{-- Custom Value Row --}}
+<div class="form-row hide custom-value-row">
+    <div class="col-2 col-md-1 mb-2">
+        <span class="btn btn-link drag-custom-value-row w-100"><i class="fas fa-arrows-alt-v"></i></span>
+    </div>
+    <div class="col-5 col-md-3 mb-2">
+        {!! Form::text('custom_values_group[]', null, ['class' => 'form-control', 'maxLength' => 50, 'placeholder' => "Group (Optional)"]) !!}
+    </div>
+    <div class="col-5 col-md-3 mb-2">
+        {!! Form::text('custom_values_name[]', null, ['class' => 'form-control', 'maxLength' => 50, 'placeholder' => "Title:"]) !!}
+    </div>
+    <div class="col-10 col-md-4 mb-3">
+        {!! Form::text('custom_values_data[]', null, ['class' => 'form-control', 'maxLength' => 150, 'placeholder' => "Custom Value"]) !!}
+    </div>
+    <div class="col-2 col-md-1 mb-3">
+        <button class="btn btn-danger delete-custom-value-row w-100" type="button">x</button>
+    </div>
+</div>
+
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        $(document).ready(function(){
+            $values = $("#customValues");
+            $values.sortable({ handle: ".drag-custom-value-row" });
+            $values.find(".delete-custom-value-row").each(function(i) {
+                deleteRowOnClick($(this));
+            });
+            $(".add-custom-value-row").on('click', function(e) {
+                e.preventDefault();
+                $clone = $(".custom-value-row").clone();
+                $clone.removeClass("hide custom-value-row");
+                deleteRowOnClick($clone.find('.delete-custom-value-row'));
+                $values.append($clone);
+            });
+            function deleteRowOnClick(node) {
+                node.on('click', function(e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
+                });
+            }
+        });
+    </script>
+@endsection {{-- end scripts --}}

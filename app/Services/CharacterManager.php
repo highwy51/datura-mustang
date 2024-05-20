@@ -16,6 +16,9 @@ use App\Models\Character\CharacterStat;
 use App\Models\Character\CharacterTransfer;
 use App\Models\Character\CharacterLineage;
 use App\Models\Sales\SalesCharacter;
+use App\Models\Character\CharacterProfileCustomValue;
+use App\Models\User\UserCharacterLog;
+use App\Models\Species\Species;
 use App\Models\Species\Subtype;
 use App\Models\User\User;
 use App\Models\User\UserPet;
@@ -1613,7 +1616,30 @@ class CharacterManager extends Service {
             $character->profile->parsed_text = parse($data['text']);
             $character->profile->save();
 
-            if ($isAdmin && isset($data['alert_user']) && $character->is_visible && $character->user_id) {
+            if (!$character->is_myo_slot) {
+                // clear old custom values and add new ones.
+                $character->profile->custom_values()->delete();
+                if(isset($data['custom_values_data'])) {
+                    foreach( $data['custom_values_data'] as $i => $val) {
+                        $val_parsed = parse($val);
+                        if ($val_parsed != "") {
+                            $group = isset($data['custom_values_group']) ? $data['custom_values_group'][$i] : null;
+                            $name = isset($data['custom_values_name']) ? $data['custom_values_name'][$i] : null;
+                            $custom_value = CharacterProfileCustomValue::create([
+                                'character_id' => $character->id,
+                                'group' => $group,
+                                'name' => $name,
+                                'data' => $val,
+                                'data_parsed' => $val_parsed,
+                            ]);
+                        }
+                    }
+                }
+                $character->profile->save();
+            }
+
+            if($isAdmin && isset($data['alert_user']) && $character->is_visible && $character->user_id)
+            {
                 Notifications::create('CHARACTER_PROFILE_EDIT', $character->user, [
                     'character_name' => $character->name,
                     'character_slug' => $character->is_myo_slot ? $character->id : $character->slug,
