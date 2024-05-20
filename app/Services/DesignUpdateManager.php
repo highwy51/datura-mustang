@@ -37,8 +37,8 @@ class DesignUpdateManager extends Service {
     /**
      * Creates a character design update request (or a MYO design approval request).
      *
-     * @param \App\Models\Character\Character $character
-     * @param \App\Models\User\User           $user
+     * @param Character $character
+     * @param User      $user
      *
      * @return \App\Models\Character\CharacterDesignUpdate|bool
      */
@@ -98,8 +98,8 @@ class DesignUpdateManager extends Service {
     /**
      * Saves the comment section of a character design update request.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
      *
      * @return bool
      */
@@ -123,9 +123,9 @@ class DesignUpdateManager extends Service {
     /**
      * Saves the image upload section of a character design update request.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
-     * @param bool                                        $isAdmin
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
+     * @param bool                  $isAdmin
      *
      * @return bool
      */
@@ -237,8 +237,8 @@ class DesignUpdateManager extends Service {
     /**
      * Saves the addons section of a character design update request.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
      *
      * @return bool
      */
@@ -349,8 +349,8 @@ class DesignUpdateManager extends Service {
     /**
      * Saves the character features (traits) section of a character design update request.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
      *
      * @return bool
      */
@@ -425,7 +425,7 @@ class DesignUpdateManager extends Service {
     /**
      * Submit a character design update request to the approval queue.
      *
-     * @param \App\Models\Character\CharacterDesignUpdate $request
+     * @param CharacterDesignUpdate $request
      *
      * @return bool
      */
@@ -462,9 +462,9 @@ class DesignUpdateManager extends Service {
     /**
      * Approves a character design update request and processes it.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
-     * @param \App\Models\User\User                       $user
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
+     * @param User                  $user
      *
      * @return bool
      */
@@ -726,11 +726,11 @@ class DesignUpdateManager extends Service {
      * Rejection can be a soft rejection (reopens the request so the user can edit it and resubmit)
      * or a hard rejection (takes the request out of the queue completely).
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
-     * @param \App\Models\User\User                       $user
-     * @param bool                                        $forceReject
-     * @param mixed                                       $notification
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
+     * @param User                  $user
+     * @param bool                  $forceReject
+     * @param mixed                 $notification
      *
      * @return bool
      */
@@ -816,9 +816,9 @@ class DesignUpdateManager extends Service {
     /**
      * Cancels a character design update request.
      *
-     * @param array                                       $data
-     * @param \App\Models\Character\CharacterDesignUpdate $request
-     * @param \App\Models\User\User                       $user
+     * @param array                 $data
+     * @param CharacterDesignUpdate $request
+     * @param User                  $user
      *
      * @return bool
      */
@@ -866,7 +866,7 @@ class DesignUpdateManager extends Service {
     /**
      * Deletes a character design update request.
      *
-     * @param \App\Models\Character\CharacterDesignUpdate $request
+     * @param CharacterDesignUpdate $request
      *
      * @return bool
      */
@@ -937,9 +937,9 @@ class DesignUpdateManager extends Service {
     /**
      * Votes on a character design update request.
      *
-     * @param string                                      $action
-     * @param \App\Models\Character\CharacterDesignUpdate $request
-     * @param \App\Models\User\User                       $user
+     * @param string                $action
+     * @param CharacterDesignUpdate $request
+     * @param User                  $user
      *
      * @return bool
      */

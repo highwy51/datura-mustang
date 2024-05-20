@@ -395,30 +395,20 @@ class CharacterImageController extends Controller {
     }
 
     /**
-     * Generates an images character colours.
+     * Gets the typing widget for a character image.
      *
-     * @param App\Services\CharacterManager $service
-     * @param int                           $id
+     * @param mixed $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function postImageColours(Request $request, CharacterManager $service, $id) {
+    public function getTyping($id) {
         $image = CharacterImage::find($id);
         if (!$image) {
             abort(404);
         }
-        $colours = null;
-        if ($request->input('edit')) {
-            $colours = $request->input('colours');
-        }
-        if ($service->imageColours($image, Auth::user(), $colours)) {
-            flash('Character image colours updated successfully.')->success();
-        } else {
-            foreach ($service->errors()->getMessages()['error'] as $error) {
-                flash($error)->error();
-            }
-        }
 
-        return redirect()->back();
+        return view('widgets._add_typing', [
+            'object' => $image,
+        ]);
     }
 }

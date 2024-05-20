@@ -25,7 +25,13 @@ use App\Models\Character\CharacterLineageBlacklist;
 use App\Models\Gallery\GalleryCharacter;
 use App\Models\Item\Item;
 use App\Models\Item\ItemLog;
+use App\Models\Level\LevelLog;
 use App\Models\Rarity;
+use App\Models\Stat\CountLog;
+use App\Models\Stat\ExpLog;
+use App\Models\Stat\Stat;
+use App\Models\Stat\StatLog;
+use App\Models\Stat\StatTransferLog;
 use App\Models\Submission\Submission;
 use App\Models\Submission\SubmissionCharacter;
 use App\Models\Trade;
@@ -45,7 +51,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'nickname',
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'nickname', 'class_id'
     ];
 
     /**
@@ -171,6 +177,20 @@ class Character extends Model {
     }
 
     /**
+     * Get character level.
+     */
+    public function level() {
+        return $this->hasOne(CharacterLevel::class, 'character_id');
+    }
+
+    /**
+     * Get characters stats.
+     */
+    public function stats() {
+        return $this->hasMany(CharacterStat::class, 'character_id');
+    }
+
+    /**
      * Get the character's active design update.
      */
     public function designUpdate() {
@@ -189,6 +209,35 @@ class Character extends Model {
      */
     public function rarity() {
         return $this->belongsTo(Rarity::class, 'rarity_id');
+    }
+
+    /**
+     * Get the character's associated pets.
+     */
+    public function pets() {
+        return $this->hasMany('App\Models\User\UserPet', 'character_id');
+    }
+
+    /**
+     * Get the character's associated gear.
+     */
+    public function gear() {
+        return $this->hasMany('App\Models\User\UserGear', 'character_id');
+    }
+
+    /**
+     * Get the character's associated weapons.
+     */
+    public function weapons() {
+        return $this->hasMany('App\Models\User\UserWeapon', 'character_id');
+    }
+
+    /**
+     * Gets both the character's gear and weapons.
+     * Technically not a relation.
+     */
+    public function equipment() {
+        return $this->hasMany('App\Models\User\UserGear', 'character_id')->get()->concat($this->hasMany('App\Models\User\UserWeapon', 'character_id')->get());
     }
 
     /**
@@ -228,6 +277,23 @@ class Character extends Model {
     {
         return $this->hasMany('App\Models\Character\BreedingPermission', 'character_id');
     }
+
+    /**
+     * Get the character's class.
+     */
+    public function class() 
+    {
+        return $this->belongsTo('App\Models\Character\CharacterClass', 'class_id');
+    }
+
+    /**
+     * Get the character's skills.
+     */
+    public function skills() 
+    {
+        return $this->hasMany('App\Models\Character\CharacterSkill', 'character_id');
+    }
+
 
     /**********************************************************************************************
 
@@ -473,6 +539,107 @@ class Character extends Model {
     }
 
     /**
+     * Get the character's exp logs.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    public function getExpLogs($limit = 10) {
+        $character = $this;
+        $query = ExpLog::where(function ($query) use ($character) {
+            $query->with('sender')->where('sender_type', 'Character')->where('sender_id', $character->id)->whereNotIn('log_type', ['Staff Grant', 'Prompt Rewards', 'Claim Rewards']);
+        })->orWhere(function ($query) use ($character) {
+            $query->with('recipient')->where('recipient_type', 'Character')->where('recipient_id', $character->id)->where('log_type', '!=', 'Staff Removal');
+        })->orderBy('id', 'DESC');
+        if ($limit) {
+            return $query->take($limit)->get();
+        } else {
+            return $query->paginate(30);
+        }
+    }
+
+    /**
+     * Get the character's stat logs.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    public function getStatTransferLogs($limit = 10) {
+        $character = $this;
+        $query = StatTransferLog::where(function ($query) use ($character) {
+            $query->with('sender')->where('sender_type', 'Character')->where('sender_id', $character->id);
+        })->orWhere(function ($query) use ($character) {
+            $query->with('recipient')->where('recipient_type', 'Character')->where('recipient_id', $character->id);
+        })->orderBy('id', 'DESC');
+
+        if ($limit) {
+            return $query->take($limit)->get();
+        } else {
+            return $query->paginate(30);
+        }
+    }
+
+    /**
+     * Get the character's stat logs.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    public function getStatLevelLogs($limit = 10) {
+        $character = $this;
+        $query = StatLog::where('leveller_type', 'Character')->where('recipient_id', $character->id)->orderBy('id', 'DESC');
+
+        if ($limit) {
+            return $query->take($limit)->get();
+        } else {
+            return $query->paginate(30);
+        }
+    }
+
+    /**
+     * Get the character's level logs.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    public function getLevelLogs($limit = 10) {
+        $character = $this;
+        $query = LevelLog::where(function ($query) use ($character) {
+            $query->with('recipient')->where('leveller_type', 'Character')->where('recipient_id', $character->id);
+        })->orderBy('id', 'DESC');
+        if ($limit) {
+            return $query->take($limit)->get();
+        } else {
+            return $query->paginate(30);
+        }
+    }
+
+    /**
+     * Get the character's stat count logs.
+     *
+     * @param int $limit
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    public function getCountLogs($limit = 10) {
+        $character = $this;
+        $query = CountLog::where(function ($query) use ($character) {
+            $query->with('sender')->where('sender_type', 'Character')->where('sender_id', $character->id)->whereNotIn('log_type', ['Staff Grant', 'Prompt Rewards', 'Claim Rewards']);
+        })->orWhere(function ($query) use ($character) {
+            $query->where('character_id', $character->id)->where('log_type', '!=', 'Staff Removal');
+        })->orderBy('id', 'DESC');
+        if ($limit) {
+            return $query->take($limit)->get();
+        } else {
+            return $query->paginate(30);
+        }
+    }
+
+    /**
      * Get the character's held currencies as an array for select inputs.
      *
      * @return array
@@ -542,7 +709,18 @@ class Character extends Model {
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getCharacterLogs() {
-        $query = CharacterLog::with('sender.rank')->where('character_id', $this->id)->orderBy('id', 'DESC');
+        $query = CharacterLog::with('sender.rank')->where('character_id', $this->id)->where('log_type', '!=', 'Skill Awarded')->orderBy('id', 'DESC');
+
+        return $query->paginate(30);
+    }
+
+    /**
+     * Get the character's update logs.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getCharacterSkillLogs() {
+        $query = CharacterLog::with('sender.rank')->where('character_id', $this->id)->where('log_type', 'Skill Awarded')->orderBy('id', 'DESC');
 
         return $query->paginate(30);
     }
@@ -614,29 +792,139 @@ class Character extends Model {
     }
 
     /**
-     * Finds the lineage blacklist level of this character.
-     * 0 is no restriction at all
-     * 1 is ancestors but no children
-     * 2 is no lineage at all
-     *
-     * @return int
-     */
+    *Finds the lineage blacklist level of this character.
+    * 0 is no restriction at all
+    * 1 is ancestors but no children
+    * 2 is no lineage at all
+    *
+    * @return int
+    */
     public function getLineageBlacklistLevel($maxLevel = 2)
     {
         return CharacterLineageBlacklist::getBlacklistLevel($this, $maxLevel);
     }
 
     /**
-     * Gets the character's parent type (ex father, mother, parent) based on sex
-     * 
-     */
+    * Gets the character's parent type (ex father, mother, parent) based on sex
+    * 
+    */
     public function getParentTypeAttribute() {
         if (!$this->image->sex) {
             return "Parent";
-        } else if ($this->image->sex == "Male") {
-            return "Father";
+         } else if ($this->image->sex == "Male") {
+             return "Father";
         } else {
             return "Mother";
         }
+    }
+
+    /* Gets the characters stats, but only those that apply to the character's species / subtype.
+     */
+    public function getStatsAttribute() {
+        $character = $this;
+        $stats = Stat::whereHas('limits', function ($query) use ($character) {
+            $query->where('species_id', $character->image->species_id)->where('is_subtype', 0);
+        })->orWhereHas('limits', function ($query) use ($character) {
+            $query->where('species_id', $character->image->subtype_id)->where('is_subtype', 1);
+        })->orWhereDoesntHave('limits')->orderBy('name', 'ASC')->get();
+
+        return $this->stats()->whereIn('stat_id', $stats->pluck('id')->toArray())->get();
+    }
+
+    /**
+     * Propagates stats.
+     */
+    public function propagateStats() {
+        // get all stats where the species limit is the species of the character
+        $character = $this;
+
+        // technically, we can propagate all stats, since the above function will only return stats that apply to the character's species
+        $stats = Stat::whereHas('limits', function ($query) use ($character) {
+            $query->where('species_id', $character->image->species_id)->where('is_subtype', 0);
+        })->orWhereHas('limits', function ($query) use ($character) {
+            $query->where('species_id', $character->image->subtype_id)->where('is_subtype', 1);
+        })->orWhereDoesntHave('limits')->get();
+
+        // prevents running it when unneeded. if there's an error idk lol
+        if ($this->stats()->pluck('stat_id')->toArray() != $stats->pluck('id')->toArray()) {
+            // we need to do this each time in case a new stat is made. It slows it down but -\(-v-)/-
+            foreach ($stats as $stat) {
+                if (!$this->stats->where('stat_id', $stat->id)->first()) {
+                    // check if stat has a base value that is for this character's species or subtype
+                    // subtype takes precedence over species, so check for subtype first
+                    $base = null;
+                    $base = $stat->hasBaseValue('subtype', $this->image->subtype_id);
+                    if (!$base) {
+                        $base = $stat->hasBaseValue('species', $this->image->species_id);
+                    }
+
+                    $this->stats()->create([
+                        'character_id'  => $this->id,
+                        'stat_id'       => $stat->id,
+                        'count'         => $base ? $base : $stat->base,
+                        'current_count' => $base ? $base : $stat->base,
+                    ]);
+                }
+            }
+
+            // Refresh the model instance so that newly created stats are immediately available
+            $this->refresh();
+        }
+    }
+
+    /**
+     * Gets total stat count including bonuses etc., without acknowledging current count.
+     *
+     * @param mixed $stat_id
+     */
+    public function totalStatCount($stat_id) {
+        $stat = $this->stats->where('stat_id', $stat_id)->first();
+        $total = $stat->count;
+        $total += $this->bonusStatCount($stat_id);
+
+        return $total;
+    }
+
+    /**
+     * gets the total stat count with current count acknowledgment.
+     *
+     * @param mixed $stat_id
+     */
+    public function currentStatCount($stat_id) {
+        $stat = $this->stats->where('stat_id', $stat_id)->first();
+        $total = $stat->current_count ? $stat->current_count : $stat->count;
+        if ($total < 1) {
+            return 0; // prevents, for example, hp bonuses from being applied to a character with 0 hp
+        }
+        $total += $this->bonusStatCount($stat_id);
+
+        return $total;
+    }
+
+    /**
+     * gets bonus stat count.
+     *
+     * @param mixed $stat_id
+     */
+    public function bonusStatCount($stat_id) {
+        $total = 0;
+        foreach ($this->equipment() as $equipment) {
+            if ($equipment->equipment->stats()->where('stat_id', $stat_id)->first()) {
+                $total += $equipment->equipment->stats()->where('stat_id', $stat_id)->first()->count;
+            }
+        }
+
+        return $total;
+    }
+
+    /**
+     * Gets the equipment that affects a stat.
+     *
+     * @param mixed $stat_id
+     */
+    public function getStatEquipment($stat_id) {
+        return $this->equipment()->filter(function ($equipment) use ($stat_id) {
+            return $equipment->equipment->stats()->where('stat_id', $stat_id)->first();
+        });
     }
 }
