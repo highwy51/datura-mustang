@@ -42,6 +42,7 @@
                             <h6><b>Nickname</b></h6>
                         </div>
                         <div class="col-lg-8 col-md-6 col-8">{!! $character->nickname !!}</div>
+                    </div>
                 @endif
                 
                 @if ($image->subtype_id)
