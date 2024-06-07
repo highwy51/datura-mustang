@@ -295,6 +295,13 @@ class Character extends Model {
         return $this->hasMany('App\Models\Character\CharacterSkill', 'character_id');
     }
 
+    /**
+     * Get all of the likes that are not NULL
+     */
+    public function characterLikes() 
+    {
+        return $this->hasMany('App\Models\Character\CharacterLike')->where('character_id', $this->id)->whereNotNull('liked_at');
+    }
 
     /**********************************************************************************************
 
@@ -927,5 +934,17 @@ class Character extends Model {
         return $this->equipment()->filter(function ($equipment) use ($stat_id) {
             return $equipment->equipment->stats()->where('stat_id', $stat_id)->first();
         });
+    }
+    
+    /**
+     * Return like count based on site setting
+     *
+     * Will always return the accurate count even if settings are flip flopped around (i am paranoid.)
+     */
+    public function getLikeTotalAttribute() {
+        //can like only once
+        if(!Settings::get('character_likes')) {
+            return $this->characterLikes->count();
+        }else return $this->profile->like_count;
     }
 }

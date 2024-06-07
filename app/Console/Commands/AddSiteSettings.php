@@ -74,6 +74,12 @@ class AddSiteSettings extends Command {
         $this->addSiteSetting('group_currency', 1, 'ID of the group currency to award from gallery submissions (if enabled).');
 
         $this->addSiteSetting('claymore_cooldown', 0, 'Number of days to add to the cooldown timer when a pet/weapon/gear is attached.');
+                
+        $this->addSiteSetting('character_likes', 1, '0: Characters can be liked only once, 1: Characters can be liked daily.');
+
+        $this->addSiteSetting('character_likes_leaderboard_enable', 1, '0: Disable leaderboard, 1: Enable leaderboard.');
+
+        $this->line("\nSite settings up to date!");
 
         $this->addSiteSetting('stamina_per_object', 15, 'Max stamina per user / character. May take a bit for every user / character to reflect this change.');
 
