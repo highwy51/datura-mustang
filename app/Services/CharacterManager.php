@@ -1604,6 +1604,9 @@ class CharacterManager extends Service {
             if (!$character->is_myo_slot) {
                 $character->name = $data['name'];
                 $character->nickname = $data['nickname'];
+                $character->herd = $data['herd'];
+                $character->height = $data['height'];
+
             }
             $character->save();
 

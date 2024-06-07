@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="headerNav">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ url('/') }}" id="navbar-brand-1">
             {{ config('lorekeeper.settings.site_name', 'Lorekeeper') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -19,54 +19,20 @@
                 </li>
                 @if (Auth::check())
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ url('howtoplay') }}">How To Play</a>
-                    <li class="nav-item dropdown">
-                        <a id="inventoryDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Home
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="inventoryDropdown">
-                            <a class="dropdown-item" href="{{ url('characters') }}">
-                                My Characters
-                            </a>
-                            <a class="dropdown-item" href="{{ url('characters/myos') }}">
-                                My MYO Slots
-                            </a>
-                            <a class="dropdown-item" href="{{ url('pets') }}">
-                                My Pets
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url('inventory') }}">
-                                Inventory
-                            </a>
-                            <a class="dropdown-item" href="{{ url('bank') }}">
-                                Bank
-                            </a>
-                            <a class="dropdown-item" href="{{ url('stats') }}">
-                                Stat Information
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url('comments/liked') }}">
-                                Liked Comments
-                            </a>
-                        </div>
-                    </li>
+                    <a class="nav-link" href="{{ url('howtoplay/gettingstarted') }}">How To Play</a>
                     <li class="nav-item dropdown">
                         <a id="queueDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             Activities
                         </a>
                         <div class="dropdown-menu" aria-labelledby="queueDropdown">
                             <a class="dropdown-item" href="{{ url('submissions') }}">
-                                Prompt Submissions
-                            </a>
-                            <a class="dropdown-item" href="{{ url('claims') }}">
-                                Claims
-                            </a>
-                            <a class="dropdown-item" href="{{ url('reports') }}">
-                                Reports
+                                Submissions
                             </a>
                             <a class="dropdown-item" href="{{ url('designs') }}">
-                                Design Approvals
+                                Tracking Requests
+                            </a>
+                            <a class="dropdown-item" href="{{ url('raffles') }}">
+                                Raffles
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('characters/transfers/incoming') }}">
@@ -87,17 +53,12 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="browseDropdown">
-                        <a class="dropdown-item" href="{{ url('users') }}">
-                            Users
-                        </a>
                         <a class="dropdown-item" href="{{ url('masterlist') }}">
-                            Character Masterlist
+                            Datura Masterlist
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url('raffles') }}">
-                            Raffles
+                        <a class="dropdown-item" href="{{ url('users') }}">
+                            Players
                         </a>
-                        <div class="dropdown-divider"></div>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -110,6 +71,9 @@
                         </a>
                         <a class="dropdown-item" href="{{ url('shops') }}">
                             Shops
+                        </a>
+                        <a class="dropdown-item" href="{{ url('shops') }}">
+                            NPC Herds
                         </a>
                     </div>
                 </li>
@@ -180,7 +144,7 @@
                                 My Characters
                             </a>
                             <a class="dropdown-item" href="{{ url('breeding-permissions') }}">
-                                My Breeding Slots
+                                My Observed Offspring
                             </a>
                             <a class="dropdown-item" href="{{ url('inventory') }}">
                                 Inventory

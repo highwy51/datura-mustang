@@ -41,19 +41,13 @@
     <div class="card character-bio">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" id="statsTab" data-toggle="tab" href="#stats" role="tab">Stats</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="notesTab" data-toggle="tab" href="#notes" role="tab">Description</a>
-                </li>
-                @if ($character->getLineageBlacklistLevel() < 2)
+                @if ($character->getLineageBlacklistLevel() < 2)   
                     <li class="nav-item">
-                        <a class="nav-link" id="lineageTab" data-toggle="tab" href="#lineage" role="tab">Lineage</a>
+                        <a class="nav-link active" id="lineageTab" data-toggle="tab" href="#lineage" role="tab">Lineage</a>
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link" id="skillsTab" data-toggle="tab" href="#skills" role="tab">Skills</a>
+                    <a class="nav-link" id="notesTab" data-toggle="tab" href="#notes" role="tab">Tracking</a>
                 </li>
                 @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
                     <li class="nav-item">
@@ -63,17 +57,17 @@
             </ul>
         </div>
         <div class="card-body tab-content">
-            <div class="tab-pane fade show active" id="stats">
-                @include('character._tab_stats', ['character' => $character])
-            </div>
-            <div class="tab-pane fade" id="notes">
-                @include('character._tab_notes', ['character' => $character])
-            </div>
             @if ($character->getLineageBlacklistLevel() < 2)
-                <div class="tab-pane fade" id="lineage">
+                <div class="tab-pane fade show active" id="lineage">
                     @include('character._tab_lineage', ['character' => $character])
                 </div>
             @endif
+            <div class="tab-pane fade" id="notes">
+                @include('character._tab_notes', ['character' => $character])
+            </div>
+            <div class="tab-pane fade" id="skills">
+                @include('character._tab_skills', ['character' => $character, 'skills' => $skills])
+            </div>
             <div class="tab-pane fade" id="skills">
                 @include('character._tab_skills', ['character' => $character, 'skills' => $skills])
             </div>

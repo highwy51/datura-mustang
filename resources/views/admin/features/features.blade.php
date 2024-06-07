@@ -81,15 +81,7 @@
                             <div class="col-6 col-md-2">
                                 <div class="logs-table-cell">{{ $feature->category ? $feature->category->name : '---' }}</div>
                             </div>
-                            <div class="col-6 col-md-2">
-                                <div class="logs-table-cell">{{ $feature->species ? $feature->species->name : '---' }}</div>
-                            </div>
-                            <div class="col-6 col-md-2">
-                                <div class="logs-table-cell">{{ $feature->subtype ? $feature->subtype->name : '---' }}</div>
-                            </div>
-                            <div class="col-12 col-md-1">
-                                <div class="logs-table-cell"><a href="{{ url('admin/data/traits/edit/' . $feature->id) }}" class="btn btn-primary py-0 px-1 w-100">Edit</a></div>
-                            </div>
+                                <div class="logs-table-cell"><a href="{{ url('admin/data/traits/edit/' . $feature->id) }}" class="btn btn-primary py-0 px-1 w-50">Edit</a></div>
                         </div>
                     </div>
                 @endforeach
