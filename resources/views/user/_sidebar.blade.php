@@ -10,26 +10,21 @@
         <div class="sidebar-section-header">User</div>
         <div class="sidebar-item"><a href="{{ $user->url . '/aliases' }}" class="{{ set_active('user/' . $user->name . '/aliases*') }}">Aliases</a></div>
         <div class="sidebar-item"><a href="{{ $user->url . '/characters' }}" class="{{ set_active('user/' . $user->name . '/characters*') }}">Characters</a></div>
+        <div class="sidebar-item"><a href="{{ $user->url . '/herds' }}" class="{{ set_active('user/' . $user->name . '/herds*') }}">Herds</a></div>
         @if (isset($sublists) && $sublists->count() > 0)
             @foreach ($sublists as $sublist)
                 <div class="sidebar-item"><a href="{{ $user->url . '/sublist/' . $sublist->key }}" class="{{ set_active('user/' . $user->name . '/sublist/' . $sublist->key) }}">{{ $sublist->name }}</a></div>
             @endforeach
         @endif
-        <div class="sidebar-item"><a href="{{ $user->url . '/myos' }}" class="{{ set_active('user/' . $user->name . '/myos*') }}">MYO Slots</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url.'/breeding-permissions' }}" class="{{ set_active('user/'.$user->name.'/breeding-permissions*') }}">Breeding Permissions</a></div>
+        <div class="sidebar-item"><a href="{{ $user->url.'/breeding-permissions' }}" class="{{ set_active('user/'.$user->name.'/breeding-permissions*') }}">Foal Slots</a></div>
         <div class="sidebar-item"><a href="{{ $user->url . '/inventory' }}" class="{{ set_active('user/' . $user->name . '/inventory*') }}">Inventory</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/bank' }}" class="{{ set_active('user/' . $user->name . '/bank*') }}">Bank</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/pets' }}" class="{{ set_active('user/' . $user->name . '/pets*') }}">Pets</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/armoury' }}" class="{{ set_active('user/' . $user->name . '/armoury*') }}">Armoury</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/stats' }}" class="{{ set_active('user/' . $user->name . '/stats*') }}">Stat Information</a></div>
+        <div class="sidebar-item"><a href="{{ $user->url . '/bank' }}" class="{{ set_active('user/' . $user->name . '/bank*') }}">Ember Collection</a></div>
     </li>
     <li class="sidebar-section">
         <div class="sidebar-section-header">History</div>
         <div class="sidebar-item"><a href="{{ $user->url . '/ownership' }}" class="{{ $user->url . '/ownership*' }}">Ownership History</a></div>
         <div class="sidebar-item"><a href="{{ $user->url . '/item-logs' }}" class="{{ $user->url . '/currency-logs*' }}">Item Logs</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/pet-logs' }}" class="{{ set_active($user->url . '/pet-logs*') }}">Pet Logs</a></div>
         <div class="sidebar-item"><a href="{{ $user->url . '/currency-logs' }}" class="{{ set_active($user->url . '/currency-logs*') }}">Currency Logs</a></div>
-        <div class="sidebar-item"><a href="{{ $user->url . '/pet-logs' }}" class="{{ set_active($user->url . '/pet-logs*') }}">Pet Logs</a></div>
         <div class="sidebar-item"><a href="{{ $user->url . '/submissions' }}" class="{{ set_active($user->url . '/submissions*') }}">Submissions</a></div>
     </li>
 

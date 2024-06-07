@@ -36,6 +36,8 @@
 
             {{-- Basic info --}}
             <div class="tab-pane fade show active" id="info-{{ $image->id }}">
+                
+                <!-- Nickname -->
                 @if ($character->nickname)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
@@ -44,7 +46,18 @@
                         <div class="col-lg-8 col-md-6 col-8">{!! $character->nickname !!}</div>
                     </div>
                 @endif
-                
+
+                <!-- Herd -->
+                @if ($character->herd)
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-4">
+                            <h6><b>Herd</b></h6>
+                        </div>
+                        <div class="col-lg-8 col-md-6 col-8">{!! $character->herd !!}</div>
+                    </div>
+                @endif
+
+                <!-- Sub-breed -->
                 @if ($image->subtype_id)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
@@ -53,14 +66,8 @@
                         <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
                     </div>
                 @endif
-                @if ($image->subtype_id)
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-4">
-                            <h6><b>Mutation Status</b></h6>
-                        </div>
-                        <div class="col-lg-8 col-md-6 col-8">{!! $image->subtype_id ? $image->subtype->displayName : 'None' !!}</div>
-                    </div>
-                @endif
+
+                <!-- Gender -->
                 @if ($image->sex)
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-4">
@@ -69,67 +76,211 @@
                         <div class="col-lg-8 col-md-6 col-8">{!! $image->sex !!}</div>
                     </div>
                 @endif
-                <div class="mb-3">
-                    <div>
-                        <h6><b>Phenotype</b></h6>
+                
+                <!-- Height -->
+                <div class="row">
+                        <div class="col-lg-4 col-md-6 col-4">
+                            <h6><b>Height</b></h6>
+                        </div>
+                        @if ($character->height)
+                        <div class="col-lg-8 col-md-6 col-8">{!! $character->height !!} hh</div>
+                        @else <div class="col-lg-8 col-md-6 col-8"> Unknown </div>
+                        @endif
                     </div>
-                    @if (config('lorekeeper.extensions.traits_by_category'))
-                        <div>
-                            @php
-                                $traitgroup = $image
-                                    ->features()
-                                    ->get()
-                                    ->groupBy('feature_category_id');
-                            @endphp
-                            @if ($image->features()->count())
-                                @foreach ($traitgroup as $key => $group)
-                                    <div class="mb-2">
-                                        @if ($key)
-                                            <strong>{!! $group->first()->feature->category->displayName !!}:</strong>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- Mutation Status -->
+                @if($character->profile->custom_values->count() > 0)
+                    @php $valueGroups = $character->profile->custom_values->groupBy('group'); @endphp
+                    @foreach($valueGroups as $groupName => $values)
+                        <div class="row">
+                            @if($groupName)
+                                <div class="col-lg-4 col-md-6 col-4">
+                                    <h6><b>{{ $groupName }}</b></h6>
+                                </div>
+                            @endif
+                            <div class="col-lg-8 col-md-6 col-8">
+                                @foreach($values as $value)
+                                    <div class="row mb-2">
+                                        @if($value->name && $value->name != "")
+                                            <div class="col-12">
+                                                <h6 class="mb-0" style="font-weight: bold;">{{ $value->name }}</h6>
+                                            </div>
+                                            <div class="col-12">{!! $value->data_parsed !!}</div>
                                         @else
-                                            <strong>Miscellaneous:</strong>
+                                            <div class="col-12">{!! $value->data_parsed !!}</div>
                                         @endif
-                                        @foreach ($group as $feature)
-                                            <div class="ml-md-2">{!! $feature->feature->displayName !!} @if ($feature->data)
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                
+                <!-- Coat -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-4">
+                        <h6><b>Coat</b></h6>
+                    </div>
+                </div>
+
+                <div class="div-6">
+                    @if (config('lorekeeper.extensions.traits_by_category'))
+                        @php
+                            $traitgroup = $image->features()->get()->groupBy('feature_category_id');
+                            $hasCoatFeatures = false;
+                            $hasChimeraFeatures = false;
+                        @endphp
+                        @if ($image->features()->count())
+                            @foreach ($traitgroup as $key => $group)
+                                @foreach ($group as $feature)
+                                    @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Dilution Genes']))
+                                        @php
+                                            $hasCoatFeatures = true;
+                                            $displayName = str_replace(' (C)', '', $feature->feature->displayName);
+                                        @endphp
+                                        {!! $displayName !!}
+                                        @if ($feature->data)
+                                            ({{ $feature->data }})
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            @if (!$hasCoatFeatures)
+                                <div>No coat listed</div>
+                            @endif
+
+                            @foreach ($traitgroup as $key => $group)
+                                @foreach ($group as $feature)
+                                    @if ($feature->feature->category->name == 'Chimera')
+                                        @if (!$hasChimeraFeatures)
+                                            @php $hasChimeraFeatures = true; @endphp
+                                            | Chimera:
+                                        @endif
+                                        @php
+                                            $displayName = str_replace(' (C)', '', $feature->feature->displayName);
+                                        @endphp
+                                        {!! $displayName !!}
+                                        @if ($feature->data)
+                                            ({{ $feature->data }})
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            @else
+                                <div>No coat listed</div>
+                            @endif
+                            @else
+                                <div>
+                                    @php
+                                        $features = $image->features()->get();
+                                        $hasCoatFeatures = false;
+                                        $hasChimeraFeatures = false;
+                                    @endphp
+                                    @if ($features->count())
+                                        @foreach ($features as $feature)
+                                            @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Dilution Genes']))
+                                                @php
+                                                    $hasCoatFeatures = true;
+                                                    $displayName = str_replace(' (C)', '', $feature->feature->displayName);
+                                                @endphp
+                                                {!! $displayName !!}
+                                                @if ($feature->data)
                                                     ({{ $feature->data }})
                                                 @endif
-                                            </div>
+                                            @endif
                                         @endforeach
-                                    </div>
-                                @endforeach
+                                        @if (!$hasCoatFeatures)
+                                            <div>No coat listed</div>
+                                        @endif
+                                        @foreach ($features as $feature)
+                                            @if ($feature->feature->category->name == 'Chimera')
+                                                @if (!$hasChimeraFeatures)
+                                                    @php $hasChimeraFeatures = true; @endphp
+                                                    | Chimera:
+                                                @endif
+                                                @php
+                                                    $displayName = str_replace(' (C)', '', $feature->feature->displayName);
+                                                @endphp
+                                                {!! $displayName !!}
+                                                @if ($feature->data)
+                                                    ({{ $feature->data }})
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @else
+                                            <div>No coat listed</div>
+                                        @endif
+                                </div>
+                @endif
+
+                </div>
+
+
+                <!-- Mutations -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-4">
+                        <h6><b>Mutations</b></h6>
+                    </div>
+                </div>
+
+                @if (config('lorekeeper.extensions.traits_by_category'))
+                    @php
+                        $traitgroup = $image->features()->get()->groupBy('feature_category_id');
+                        $hasMutations = false;
+                    @endphp
+                    @if ($image->features()->count())
+                        @foreach ($traitgroup as $key => $group)
+                            @foreach ($group as $feature)
+                                @if ($feature->feature->category->name == 'Mutations')
+                                    @php $hasMutations = true; @endphp
+                                    {!! $feature->feature->displayName !!}
+                                    @if ($feature->data)
+                                        ({{ $feature->data }})
+                                    @endif
+                                @endif
+                            @endforeach
+                        @endforeach
+                        @if (!$hasMutations)
+                            <div>None</div>
+                        @endif
                             @else
-                                <div>No Phenotype traits listed.</div>
-                            @endif
-                        </div>
-                    @else
+                                <div>None</div>
+                    @endif
+                        @else
                         <div>
-                            <?php $features = $image
-                                ->features()
-                                ->with('feature.category')
-                                ->get(); ?>
+                            @php
+                                $features = $image->features()->get();
+                                $hasMutations = false;
+                            @endphp
                             @if ($features->count())
                                 @foreach ($features as $feature)
-                                    <div>
-                                        @if ($feature->feature->feature_category_id)
-                                            <strong>{!! $feature->feature->category->displayName !!}:</strong>
-                                        @endif {!! $feature->feature->displayName !!} 
+                                    @if ($feature->feature->category->name == 'Mutations')
+                                        @php $hasMutations = true; @endphp
+                                            {!! $feature->feature->displayName !!}
                                         @if ($feature->data)
-                                                ({{ $feature->data }})
+                                            ({{ $feature->data }})
                                         @endif
-                                    </div>
+                                    @endif
                                 @endforeach
-                            @else
-                                <div>No traits listed.</div>
+                                    @if (!$hasMutations)
+                                        <div>None</div>
+                                    @endif
+                                @else
+                                    <div>None</div>
                             @endif
                         </div>
-                    @endif
-                </div>
+                @endif
+
+                <!-- Created -->
                 <div>
-                    <strong>Uploaded:</strong> {!! pretty_date($image->created_at) !!}
+                    <div class="dropdown-divider"></div>
+                    <small><strong>Created:</strong> {!! format_date($character->created_at) !!}</small>
                 </div>
-                <div>
-                    <strong>Last Edited:</strong> {!! pretty_date($image->updated_at) !!}
-                </div>
+
+                <!-- Trade Status -->
+
 
                 @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
                     <div class="mt-3">
@@ -183,24 +334,6 @@
                     </div>
                 @endif
             </div>
-
-            <!-- Phenotype Testing -->
-
-            <div class="mb-3">
-                    <div>
-                        <h6><b>Phenotype</b></h6>
-                    </div>
-                    <div>
-                        @php
-                                $traitgroup = $image
-                                    ->features()
-                                    ->get()
-                                    ->groupBy('feature_category_id');
-                        @endphp
-                    </div>
-            </div>
-
-              <!-- End Test -->
 
             {{-- Image notes --}}
             <div class="tab-pane fade" id="notes-{{ $image->id }}">

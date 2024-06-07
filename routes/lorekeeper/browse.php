@@ -55,6 +55,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'Users'], function () {
     Route::get('{name}', 'UserController@getUser');
     Route::get('{name}/aliases', 'UserController@getUserAliases');
     Route::get('{name}/characters', 'UserController@getUserCharacters');
+    Route::get('{name}/herds', 'HerdController@getHerd');
     Route::get('{name}/sublist/{key}', 'UserController@getUserSublist');
     Route::get('{name}/myos', 'UserController@getUserMyoSlots');
     Route::get('{name}/breeding-permissions', 'UserController@getUserBreedingPermissions');
@@ -233,7 +234,7 @@ Route::group(['prefix' => 'reports', 'namespace' => 'Users'], function () {
     Route::get('howtoplay', 'HowToPlayController@getHowToPlay');
     Route::get('HTP', 'HowToPlayController@getHTP');
     Route::get('howtoplay/gettingstarted', 'GettingStartedController@getGettingStarted');
-    Route::get('gettingstartedadmin', 'GettingStartedController@getGettingStartedAdmin');
+    Route::get('howtoplay/sitenav', 'SiteNavController@getSiteNav');
     Route::get('time', function () {
         return date('Y-m-d H:i:s');
     });

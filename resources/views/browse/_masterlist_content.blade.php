@@ -163,9 +163,6 @@
                             @endif {{ Illuminate\Support\Str::limit($character->fullName, 20, $end = '...') }}
                         </a>
                     </div>
-                    <div class="small">
-                        {!! $character->image->species_id ? $character->image->species->displayName : 'No Species' !!} ・ {!! $character->image->rarity_id ? $character->image->rarity->displayName : 'No Rarity' !!} ・ {!! $character->displayOwner !!}
-                    </div>
                 </div>
             @endforeach
         </div>

@@ -1,6 +1,6 @@
 @extends('user.layout')
 
-@section('profile-title') {{ $user->name }}'s Breeding Permissions @endsection
+@section('profile-title') {{ $user->name }}'s Foal Slots @endsection
 
 @section('profile-content')
 {!! breadcrumbs(['Users' => 'users', $user->name => $user->url, 'Breeding Permissions' => $user->url . '/breeding-permissions']) !!}
@@ -29,7 +29,7 @@
 
     <div class="text-center mt-4 small text-muted">{{ $permissions->total() }} result{{ $permissions->total() == 1 ? '' : 's' }} found.</div>
 @else
-    <p>No breeeding permissions found.</p>
+    <p>No foal slots found.</p>
 @endif
 
 @endsection
