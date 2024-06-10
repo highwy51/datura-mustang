@@ -13,7 +13,7 @@
     <h1>{{ ucfirst(__('character_likes.likes')) }} Leaderboard</h1>
     <p>Which character has been {{ __('character_likes.liked') }} the most? The least? Find out here!</p>
 
-    <p class="alert alert-warning my-2">Remember to be nice! Harassment over {{ __('character_likes.likes') }} may be subject to punishment according to {{ config('lorekeeper.settings.site_name', 'The site\'s') }} admins.</p>
+    <p class="alert alert-warning my-2">Remember that this is just for fun! Harassment over {{ __('character_likes.likes') }} is not acceptable.</p>
 
     <div>
         {!! Form::open(['method' => 'GET']) !!}
@@ -39,7 +39,7 @@
     </div>
     <div class="text-center">
         <h4>Random Character</h4>
-        <p>Here's a random character that's allowing {{ __('character_likes.likes') }}. {{ ucfirst(__('character_likes.like')) }} them if you like them, maybe?</p>
+        <p>Here's a random character with 0 {{ __('character_likes.likes') }}. Give them a {{ ucfirst(__('character_likes.like')) }}, if you like!</p>
 
         @include('home._character', ['character' => $randomcharacter])
     </div>
