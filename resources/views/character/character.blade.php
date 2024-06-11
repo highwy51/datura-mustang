@@ -47,7 +47,7 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link" id="notesTab" data-toggle="tab" href="#notes" role="tab">Tracking</a>
+                    <a class="nav-link" id="trackingTab" data-toggle="tab" href="#tracking" role="tab">Tracking</a>
                 </li>
                 @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
                     <li class="nav-item">
@@ -62,6 +62,9 @@
                     @include('character._tab_lineage', ['character' => $character])
                 </div>
             @endif
+            <div class="tab-pane fade" id="tracking">
+                    @include('character._tab_tracking', ['character' => $character])
+            </div>
             <div class="tab-pane fade" id="notes">
                 @include('character._tab_notes', ['character' => $character])
             </div>

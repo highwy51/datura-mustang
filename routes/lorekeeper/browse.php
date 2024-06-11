@@ -84,7 +84,8 @@ Route::group(['prefix' => 'user', 'namespace' => 'Users'], function () {
 Route::get('/masterlist', 'BrowseController@getCharacters');
 Route::get('/myos', 'BrowseController@getMyos');
 Route::get('/sublist/{key}', 'BrowseController@getSublist');
-Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function () {
+Route::get('/'.__('character_likes.likes').'-leaderboard', 'BrowseController@getLikesLeaderboard');
+Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function() {
     Route::get('{slug}', 'CharacterController@getCharacter');
     Route::get('{slug}/profile', 'CharacterController@getCharacterProfile');
     Route::get('{slug}/bank', 'CharacterController@getCharacterBank');

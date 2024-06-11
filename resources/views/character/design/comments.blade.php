@@ -12,10 +12,18 @@
     <h2>Comments</h2>
 
     @if ($request->status == 'Draft' && $request->user_id == Auth::user()->id)
-        <p>Enter an optional comment about your submission (e.g. calculations) that staff will consider when reviewing your request. If you don't have a comment, click the Save button once to mark this section complete regardless.</p>
+        <p>
+            <b>Tracking Request Form</b>
+            <br>
+            Tracked Name:
+            <br>
+            Height:
+            <br>
+             <small>-Please use a lore-accurate height that suits the sub-breed of your character.</small>
+        </p>
         {!! Form::open(['url' => 'designs/' . $request->id . '/comments']) !!}
         <div class="form-group">
-            {!! Form::label('Comments (Optional)') !!}
+            {!! Form::label('Comments') !!}
             {!! Form::textarea('comments', $request->comments, ['class' => 'form-control']) !!}
         </div>
         <div class="text-right">
