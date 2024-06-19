@@ -115,7 +115,7 @@
                     <div style="margin-right: 50px; margin-left: 50px">
                         <h6> <b>1.</b> Register for a Datura.com account and verify your email address. Please use your real age when registering. Your age and birthday are hidden by default on your profile.</h6>
                         <h6> <b>2.</b> Next, link your social media account using the buttons below. Note: All existing players need to use deviantart at first, as this is what's connected to your existing herd. This can be changed later.</h6>
-                        <a href="datura-mustang.com/auth/redirect/deviantart" class="btn btn-outline-primary mr-3">Link <strong>deviantART</strong> Account</a>
+                        <a href="/auth/redirect/deviantart" class="btn btn-outline-primary mr-3">Link <strong>deviantART</strong> Account</a>
                         <a href="http://127.0.0.1:8000/auth/redirect/toyhouse" class="btn btn-outline-primary mr-3">Link <strong>Toyhou.se</strong> Account</a>
                         <a href="http://127.0.0.1:8000/auth/redirect/instagram" class="btn btn-outline-primary mr-3">Link <strong>Instagram</strong> Account</a>
                     </div>
