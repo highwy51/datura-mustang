@@ -36,7 +36,7 @@ class Pairing extends Model {
      *
      * @var array
      */
-    public $dates = ['created_at'];
+    public $casts = ['created_at'];
 
     /**
      * Validation rules for pairing creation.
