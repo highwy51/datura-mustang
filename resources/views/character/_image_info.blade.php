@@ -268,6 +268,20 @@
                         </div>
                 @endif
 
+                <!-- Fertility -->
+                <div style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-4">
+                            <h6><b>Ferility</b></h6>
+                        </div>
+                        @if ($character->canHaveChildren)
+                            <div class="col-lg-8 col-md-6 col-8"> Fertile </div>
+                        @else
+                            <div class="col-lg-8 col-md-6 col-8"> Infertile</div>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- Created -->
                 <div>
                     <div class="dropdown-divider"></div>
