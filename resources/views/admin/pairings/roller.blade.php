@@ -74,7 +74,6 @@
     </div>
 
     <div class="alert hide mb-3" id="compatibility-check"></div>
-    <div class="hide mb-3" id="colour-palettes"></div>
 
     <div class="row">
         <div class="col-md-6">
