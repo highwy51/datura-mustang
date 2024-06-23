@@ -37,15 +37,15 @@ return [
     'colour_distance' => 75,
 
     // colour palettes for checks, myos only get one palette, so this is mostly for when making the pairing to see potential offspring colours
-    'colour_palette_count' => 3,
+    'colour_palette_count' => 0,
 
     // 0: colours are blocks like on image pages, 1: colours are presented as a gradient (this is only for pairings)
     'blend_colours' => 1,
 
     // 0: characters do not automatically generate image colours on image upload, 1: characters automatically generate image colours on image upload
     // only for non-myos, myos only generate colours if from a pairing
-    'auto_generate_colours' => 1,
+    'auto_generate_colours' => 0,
 
     // 0: no alternative palettes, 1: alternative palettes are generated for pairing myos (minor adjustments to the main palette)
-    'alternative_palettes' => 1,
+    'alternative_palettes' => 0,
 ];
