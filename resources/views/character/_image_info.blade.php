@@ -130,7 +130,7 @@
                         @if ($image->features()->count())
                             @foreach ($traitgroup as $key => $group)
                                 @foreach ($group as $feature)
-                                    @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Uncommon White Markings,' 'Rare White Markings', 'Dilution Genes', 'Uncommon Dilution Genes,' 'Rare Dilution Genes']))
+                                    @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Uncommon White Markings', 'Rare White Markings', 'Dilution Genes', 'Uncommon Dilution Genes', 'Rare Dilution Genes']))
                                         @php
                                             $hasCoatFeatures = true;
                                             $displayName = str_replace(' (C)', '', $feature->feature->displayName);
@@ -175,7 +175,7 @@
                                     @endphp
                                     @if ($features->count())
                                         @foreach ($features as $feature)
-                                            @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Uncommon White Markings,' 'Rare White Markings', 'Dilution Genes', 'Uncommon Dilution Genes,' 'Rare Dilution Genes']))
+                                            @if (in_array($feature->feature->category->name, ['Base Coat', 'White Markings', 'Uncommon White Markings', 'Rare White Markings', 'Dilution Genes', 'Uncommon Dilution Genes', 'Rare Dilution Genes']))
                                                 @php
                                                     $hasCoatFeatures = true;
                                                     $displayName = str_replace(' (C)', '', $feature->feature->displayName);
@@ -190,7 +190,7 @@
                                             <div>No coat listed</div>
                                         @endif
                                         @foreach ($features as $feature)
-                                            @if @if (in_array($feature->feature->category->name, ['Chimera Base Coat', 'Chimera White Markings', 'Chimera Dilution Genes']))
+                                            @if (in_array($feature->feature->category->name, ['Chimera Base Coat', 'Chimera White Markings', 'Chimera Dilution Genes']))
                                                 @if (!$hasChimeraFeatures)
                                                     @php $hasChimeraFeatures = true; @endphp
                                                     | Chimera:
