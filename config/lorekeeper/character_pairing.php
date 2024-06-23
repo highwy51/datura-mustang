@@ -28,7 +28,7 @@ return [
 
     // if colours from parents should be inherited, entirely visual, no actual colour checks occur,
     // just a colour palette generated from parents and displayed on the pairing slots
-    'inherit_colours' => 0, // 0: Disabled, 1: Enabled
+    'inherit_colours' => 1, // 0: Disabled, 1: Enabled
 
     // 5 recommended for base colours, accents are *very* hard to get into the actual palette due to the way the palette is generated
     'colour_count' => 5,
