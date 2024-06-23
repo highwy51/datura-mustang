@@ -274,13 +274,19 @@
                         <div class="col-lg-4 col-md-6 col-4">
                             <h6><b>Ferility</b></h6>
                         </div>
-                        @if ($character->canHaveChildren)
-                            <div class="col-lg-8 col-md-6 col-8"> Fertile </div>
-                        @else
-                            <div class="col-lg-8 col-md-6 col-8"> Infertile</div>
+                        @php
+                            use App\Models\Character\CharacterLineageBlacklist;
+                            $blacklistLevel = CharacterLineageBlacklist::getBlacklistLevel($character);
+                        @endphp
+
+                        @if ($blacklistLevel == 0 || $blacklistLevel == 2)
+                            <div class="col-lg-8 col-md-6 col-8">Fertile</div>
+                        @elseif ($blacklistLevel == 1)
+                        <div class="col-lg-8 col-md-6 col-8">Infertile</div>
                         @endif
                     </div>
                 </div>
+
 
                 <!-- Created -->
                 <div>
