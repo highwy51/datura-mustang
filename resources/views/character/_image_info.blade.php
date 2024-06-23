@@ -148,7 +148,7 @@
 
                             @foreach ($traitgroup as $key => $group)
                                 @foreach ($group as $feature)
-                                    @if ($feature->feature->category->name == 'Chimera')
+                                    @if (in_array($feature->feature->category->name, ['Chimera Base Coat', 'Chimera White Markings', 'Chimera Dilution Genes']))
                                         @if (!$hasChimeraFeatures)
                                             @php $hasChimeraFeatures = true; @endphp
                                             | Chimera:
