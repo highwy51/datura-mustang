@@ -20,11 +20,11 @@
 @endif
 
 <p>
-    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum breeding slot{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available to create.
+    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum observed offspring{{ $character->availableBreedingPermissions == 1 ? '' : 's' }} available.
     @if(Auth::check() && (Auth::user()->id == $character->user_id))
-        As the character's owner, you may create and grant to other users up to this many breeding slots. Other users may see how many of this character's breeding slots have been created and/or used, and to whom they have been granted.
+        As the character's owner, you may grant other users up to this many observed offspring. Other users may see how many of this character's observed offspring have been used, and to whom they have been granted.
     @else
-        Only the character's owner can create and distribute breeding slots.
+        Only the character's owner can create and distribute observed offspring spots.
     @endif
 </p>
 
@@ -37,7 +37,7 @@
 
     {!! $permissions->render() !!}
 @else
-    <p>No used slots found.</p>
+    <p>No offspring found.</p>
 @endif
 
 @endsection
