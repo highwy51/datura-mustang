@@ -60,6 +60,7 @@ class CharacterController extends Controller {
             'isMyo'            => false,
             'characterOptions' => CharacterLineageBlacklist::getAncestorOptions(),
             'stats'            => Stat::orderBy('name')->get(),
+            'character'        => $character,
         ]);
     }
 
@@ -127,7 +128,7 @@ class CharacterController extends Controller {
     public function postCreateCharacter(Request $request, CharacterManager $service) {
         $request->validate(Character::$createRules);
         $data = $request->only([
-            'user_id', 'owner_url', 'character_category_id', 'number', 'slug',
+            'user_id', 'owner_url', 'name', 'character_category_id', 'number', 'slug',
             'description', 'is_visible', 'is_giftable', 'is_tradeable', 'is_sellable',
             'sale_value', 'transferrable_at', 'use_cropper',
             'x0', 'x1', 'y0', 'y1',

@@ -74,6 +74,10 @@
                 {!! Form::label('Character Code') !!} {!! add_help('This code identifies the character itself. You don\'t have to use the automatically generated code, but this must be unique among all characters (as it\'s used to generate the character\'s page URL).') !!}
                 {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'id' => 'code']) !!}
             </div>
+            <div class="form-group">
+                {!! Form::label('name', 'Name') !!}
+                {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
+            </div>
         @endif
 
         <div class="form-group">

@@ -1407,9 +1407,8 @@ class CharacterManager extends Service {
             $characterData['is_giftable'] = isset($data['is_giftable']);
             $characterData['sale_value'] = $data['sale_value'] ?? 0;
             $characterData['transferrable_at'] = $data['transferrable_at'] ?? null;
-            if ($character->is_myo_slot) {
-                $characterData['name'] = (isset($data['name']) && $data['name']) ? $data['name'] : null;
-            }
+            $characterData['name'] = (isset($data['name']) && $data['name']) ? $data['name'] : null;
+
 
             // Needs to be cleaned up
             $result = [];
