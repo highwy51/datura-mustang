@@ -17,28 +17,21 @@
 
         <h3>Basic Information</h3>
 
-        @if ($isMyo)
             <div class="form-group">
-                {!! Form::label('Name') !!} {!! add_help('Enter a descriptive name for the type of character this slot can create, e.g. Rare MYO Slot. This will be listed on the MYO slot masterlist.') !!}
+                {!! Form::label('Name') !!}
                 {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
             </div>
-        @endif
-
-        <div class="alert alert-info">
-            Fill in either of the owner fields - you can select a user from the list if they have registered for the site, or enter the URL of their off-site profile, such as their deviantArt profile, if they don't have an account. If the owner registers
-            an account later and links their account, {{ $isMyo ? 'MYO slot' : 'character' }}s linked to that account's profile will automatically be credited to their site account. If both fields are filled, the URL field will be ignored.
-        </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('Owner') !!}
+                    {!! Form::label('Owner') !!} 
                     {!! Form::select('user_id', $userOptions, old('user_id'), ['class' => 'form-control', 'placeholder' => 'Select User', 'id' => 'userSelect']) !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('Owner URL (Optional)') !!}
+                    {!! Form::label('Owner URL (Optional)') !!} {!! add_help('For players who do not have a Lorekeeper account, the deviantArt URL will be used.') !!}
                     {!! Form::text('owner_url', old('owner_url'), ['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -59,12 +52,12 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        {!! Form::label('Number') !!} {!! add_help('This number helps to identify the character and should preferably be unique either within the category, or among all characters.') !!}
+                        {!! Form::label('ID') !!}
                         <div class="d-flex">
                             {!! Form::text('number', old('number'), ['class' => 'form-control mr-2', 'id' => 'number']) !!}
                             <a href="#" id="pull-number" class="btn btn-primary" data-toggle="tooltip"
                                 title="This will find the highest number assigned to a character currently and add 1 to it. It can be adjusted to pull the highest number in the category or the highest overall number - this setting is in the code.">Pull
-                                Next Number</a>
+                                Next ID</a>
                         </div>
                     </div>
                 </div>
@@ -74,61 +67,35 @@
                 {!! Form::label('Character Code') !!} {!! add_help('This code identifies the character itself. You don\'t have to use the automatically generated code, but this must be unique among all characters (as it\'s used to generate the character\'s page URL).') !!}
                 {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'id' => 'code']) !!}
             </div>
-            <div class="form-group">
-                {!! Form::label('name', 'Name') !!}
-                {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
-            </div>
         @endif
-
-        <div class="form-group">
-            {!! Form::label('Description (Optional)') !!}
-            @if ($isMyo)
-                {!! add_help('This section is for making additional notes about the MYO slot. If there are restrictions for the character that can be created by this slot that cannot be expressed with the options below, use this section to describe them.') !!}
-            @else
-                {!! add_help('This section is for making additional notes about the character and is separate from the character\'s profile (this is not editable by the user).') !!}
-            @endif
-            {!! Form::textarea('description', old('description'), ['class' => 'form-control wysiwyg']) !!}
-        </div>
 
         <div class="form-group">
             {!! Form::checkbox('is_visible', 1, old('is_visible'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
             {!! Form::label('is_visible', 'Is Visible', ['class' => 'form-check-label ml-3']) !!} {!! add_help(
-                'Turn this off to hide the ' . ($isMyo ? 'MYO slot' : 'character') . '. Only mods with the Manage Masterlist power (that\'s you!) can view it - the owner will also not be able to see the ' . ($isMyo ? 'MYO slot' : 'character') . '\'s page.',
+                'Hides the character from player view. Should only be used for certain mechanics, like uploading releases/adopts/raffles at the same time.',
             ) !!}
         </div>
 
         <h3>Transfer Information</h3>
 
         <div class="alert alert-info">
-            These are displayed on the {{ $isMyo ? 'MYO slot' : 'character' }}'s profile, but don't have any effect on site functionality except for the following:
-            <ul>
-                <li>If all switches are off, the {{ $isMyo ? 'MYO slot' : 'character' }} cannot be transferred by the user (directly or through trades).</li>
-                <li>If a transfer cooldown is set, the {{ $isMyo ? 'MYO slot' : 'character' }} also cannot be transferred by the user (directly or through trades) until the cooldown is up.</li>
-            </ul>
+            These are self explanatory. Should be turned on for player horses and left off for NPCs. 
         </div>
-        <div class="form-group">
-            {!! Form::checkbox('is_giftable', 1, old('is_giftable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-            {!! Form::label('is_giftable', 'Is Giftable', ['class' => 'form-check-label ml-3']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::checkbox('is_tradeable', 1, old('is_tradeable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-            {!! Form::label('is_tradeable', 'Is Tradeable', ['class' => 'form-check-label ml-3']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::checkbox('is_sellable', 1, old('is_sellable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'resellable']) !!}
-            {!! Form::label('is_sellable', 'Is Resellable', ['class' => 'form-check-label ml-3']) !!}
-        </div>
-        <div class="card mb-3" id="resellOptions">
-            <div class="card-body">
-                {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the ' . ($isMyo ? 'MYO slot' : 'character') . '\'s page.') !!}
-                {!! Form::text('sale_value', old('sale_value'), ['class' => 'form-control']) !!}
+        <div class="form-group-container-1">
+            <div class="form-group">
+                {!! Form::checkbox('is_giftable', 1, old('is_giftable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+                {!! Form::label('is_giftable', 'Is Giftable', ['class' => 'form-check-label ml-3']) !!}
+            </div>
+            <div class="form-group-1">
+                {!! Form::checkbox('is_tradeable', 1, old('is_tradeable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+                {!! Form::label('is_tradeable', 'Is Tradeable', ['class' => 'form-check-label ml-3']) !!}
+            </div>
+            <div class="form-group-1">
+                {!! Form::checkbox('is_sellable', 1, old('is_sellable'), ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'resellable']) !!}
+                {!! Form::label('is_sellable', 'Is Resellable', ['class' => 'form-check-label ml-3']) !!}
             </div>
         </div>
-        <div class="form-group">
-            {!! Form::label('On Transfer Cooldown Until (Optional)') !!}
-            {!! Form::text('transferrable_at', old('transferrable_at'), ['class' => 'form-control datepicker']) !!}
-        </div>
-
+        
         <h3>Image Upload</h3>
 
         <div class="form-group">
@@ -136,14 +103,14 @@
             @if ($isMyo)
                 {!! add_help('This is a cover image for the MYO slot. If left blank, a default image will be used.') !!}
             @else
-                {!! add_help('This is the full masterlist image. Note that the image is not protected in any way, so take precautions to avoid art/design theft.') !!}
+                {!! add_help('This is for the official reference on the @Vacantfields base. The same image should be used for both the thumbnail and main image, since we aren\'t cropping anything.') !!}
             @endif
             <div>{!! Form::file('image', ['id' => 'mainImage']) !!}</div>
         </div>
         @if (config('lorekeeper.settings.masterlist_image_automation') === 1)
             <div class="form-group">
                 {!! Form::checkbox('use_cropper', 1, 1, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'useCropper']) !!}
-                {!! Form::label('use_cropper', 'Use Thumbnail Automation', ['class' => 'form-check-label ml-3']) !!} {!! add_help('A thumbnail is required for the upload (used for the masterlist). You can use the Thumbnail Automation, or upload a custom thumbnail.') !!}
+                {!! Form::label('use_cropper', 'Use Thumbnail Automation', ['class' => 'form-check-label ml-3']) !!} {!! add_help('Turn this off always.') !!}
             </div>
             <div class="card mb-3" id="thumbnailCrop">
                 <div class="card-body">
@@ -157,7 +124,7 @@
         @else
             <div class="form-group">
                 {!! Form::checkbox('use_cropper', 1, 1, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'useCropper']) !!}
-                {!! Form::label('use_cropper', 'Use Image Cropper', ['class' => 'form-check-label ml-3']) !!} {!! add_help('A thumbnail is required for the upload (used for the masterlist). You can use the image cropper (crop dimensions can be adjusted in the site code), or upload a custom thumbnail.') !!}
+                {!! Form::label('use_cropper', 'Use Image Cropper', ['class' => 'form-check-label ml-3']) !!} {!! add_help('Turn this off always.') !!}
             </div>
             <div class="card mb-3" id="thumbnailCrop">
                 <div class="card-body">
@@ -172,13 +139,13 @@
         @endif
         <div class="card mb-3" id="thumbnailUpload">
             <div class="card-body">
-                {!! Form::label('Thumbnail Image') !!} {!! add_help('This image is shown on the masterlist page.') !!}
+                {!! Form::label('Thumbnail Image') !!} {!! add_help('Use the same image as above.') !!}
                 <div>{!! Form::file('thumbnail') !!}</div>
                 <div class="text-muted">Recommended size: {{ config('lorekeeper.settings.masterlist_thumbnails.width') }}px x {{ config('lorekeeper.settings.masterlist_thumbnails.height') }}px</div>
             </div>
         </div>
         <p class="alert alert-info">
-            This section is for crediting the image creators. The first box is for the designer or artist's on-site username (if any). The second is for a link to the designer or artist if they don't have an account on the site.
+            This section is for crediting Noah and the designer. The artist box should always be set to Noah/@Vacantfields, unless we have guest bases at some point.
         </p>
         <div class="form-group">
             {!! Form::label('Designer(s)') !!}
@@ -210,12 +177,6 @@
                 <a href="#" class="add-artist btn btn-link mb-2" data-toggle="tooltip" title="Add another artist">+</a>
             </div>
         </div>
-        @if (!$isMyo)
-            <div class="form-group">
-                {!! Form::label('Image Notes (Optional)') !!} {!! add_help('This section is for making additional notes about the image.') !!}
-                {!! Form::textarea('image_description', old('image_description'), ['class' => 'form-control wysiwyg']) !!}
-            </div>
-        @endif
 
         <h3>Traits</h3>
 
@@ -227,7 +188,7 @@
         </div>
 
         <div class="form-group" id="subtypes">
-            {!! Form::label('Subtype (Optional)') !!} @if ($isMyo)
+            {!! Form::label('Sub-breed') !!} @if ($isMyo)
                 {!! add_help(
                     'This will lock the slot into a particular subtype. Leave it blank if you would like to give the user a choice, or not select a subtype. The subtype must match the species selected above, and if no species is specified, the subtype will not be applied.',
                 ) !!}
@@ -236,17 +197,15 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('Character Rarity') !!} @if ($isMyo)
-                {!! add_help('This will lock the slot into a particular rarity. Leave it blank if you would like to give the user more choices.') !!}
-            @endif
+            {!! Form::label('Character Rarity') !!} {!! add_help('Should be \'No Rarity\' unless infertile, where you can use \'Infertile\'.') !!}
             {!! Form::select('rarity_id', $rarities, old('rarity_id'), ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('Character Sex (Optional)') !!} @if ($isMyo)
-                {!! add_help('This assign the character a biological sex. Leave it blank if you do not intend to use this.') !!}
+            {!! Form::label('Gender') !!} @if ($isMyo)
+                {!! add_help('This assigns the character a Gender. Leave it blank if you do not intend to use this.') !!}
             @endif
-            {!! Form::select('sex', [null => 'Select Sex', 'Male' => 'Male', 'Female' => 'Female'], old('sex'), ['class' => 'form-control']) !!}
+            {!! Form::select('sex', [null => 'Select Gender', 'Male' => 'Stallion', 'Female' => 'Mare'], old('sex'), ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
@@ -269,8 +228,7 @@
 
         <h3>Lineage (Optional)</h3>
         <div class="alert alert-info">
-            If you want to assign parents to the character, you can do so here. If you don't want to assign parents, leave these fields blank.
-            <br />If you want to assign parents, but they aren't in the system, you can enter their names here.
+            If parents aren't yet added, they can be later.
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -300,13 +258,6 @@
                 </div>
             </div>
         </div>
-        @if ($stats)
-            <h3>Stats</h3>
-            <p class="alert alert-info">If you want a character to have different stats from the default, set them here. Else, leave it as default</p>
-            <div class="form-group" id="stats">
-                <p>Set species and/or subtype to edit stats.</p>
-            </div>
-        @endif
 
         <div class="text-right">
             {!! Form::submit('Create Character', ['class' => 'btn btn-primary']) !!}

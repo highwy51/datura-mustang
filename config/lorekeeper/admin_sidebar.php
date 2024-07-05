@@ -228,40 +228,8 @@ return [
         'power' => 'edit_claymores',
         'links' => [
             [
-                'name' => 'Gear',
-                'url'  => 'admin/gear',
-            ],
-            [
-                'name' => 'Weapons',
-                'url'  => 'admin/weapons',
-            ],
-            [
-                'name' => 'Attacks',
-                'url'  => 'admin/attacks',
-            ],
-            [
-                'name' => 'Character Classes',
-                'url'  => 'admin/character-classes',
-            ],
-            [
-                'name' => 'Character Skills',
-                'url'  => 'admin/data/skills',
-            ],
-            [
-                'name' => 'Stats',
-                'url'  => 'admin/stats',
-            ],
-            [
                 'name' => 'Character Levels',
                 'url'  => 'admin/levels/character',
-            ],
-            [
-                'name' => 'User Levels',
-                'url'  => 'admin/levels/user',
-            ],
-            [
-                'name' => 'Elements',
-                'url'  => 'admin/data/elements',
             ],
         ],
     ],
