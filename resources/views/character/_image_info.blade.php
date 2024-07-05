@@ -387,9 +387,6 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-4"><h6><b>Created</b></h6></div>
-                </div>
 
                 @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
                     <div class="mt-3">

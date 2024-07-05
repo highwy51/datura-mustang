@@ -11,7 +11,7 @@
 @section('content')
     {!! breadcrumbs([ucfirst(__('character_likes.likes')) . ' Leaderboard' => __('character_likes.likes') . '-leaderboard']) !!}
     <h1>{{ ucfirst(__('character_likes.likes')) }} Leaderboard</h1>
-    <p>Which character has been {{ __('character_likes.liked') }} the most? The least? Find out here!</p>
+    <p>Which character has been {{ __('character_likes.liked') }} the most? Find out here!</p>
 
     <p class="alert alert-warning my-2">Remember that this is just for fun! Harassment over {{ __('character_likes.likes') }} is not acceptable.</p>
 
@@ -26,16 +26,13 @@
                 {!! Form::label('owner', 'Owner Username: ') !!}
                 {!! Form::select('owner', $userOptions, Request::get('owner'), ['class' => 'form-control mr-2 userselectize', 'style' => 'width: 250px', 'placeholder' => 'Select a User']) !!}
             </div>
-        </div>
-
-        <div class="form-inline justify-content-end mb-3">
             <div class="form-group mr-3">
                 {!! Form::label('sort', 'Sort: ', ['class' => 'mr-2']) !!}
                 {!! Form::select('sort', ['desc' => ucfirst(__('character_likes.likes')) . ' Descending', 'asc' => ucfirst(__('character_likes.likes')) . ' Ascending'], Request::get('sort'), ['class' => 'form-control']) !!}
             </div>
             {!! Form::submit('Search', ['class' => 'btn btn-primary']) !!}
-        </div>
         {!! Form::close() !!}
+        </div>
     </div>
     <div class="text-center">
         <h4>Random Character</h4>

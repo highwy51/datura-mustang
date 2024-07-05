@@ -70,6 +70,16 @@
         @endif
 
         <div class="form-group">
+            {!! Form::label('Description (Optional)') !!}
+            @if ($isMyo)
+                {!! add_help('This section is for making additional notes about the MYO slot. If there are restrictions for the character that can be created by this slot that cannot be expressed with the options below, use this section to describe them.') !!}
+            @else
+                {!! add_help('This section is for making additional notes about the character and is separate from the character\'s profile (this is not editable by the user).') !!}
+            @endif
+            {!! Form::textarea('description', old('description'), ['class' => 'form-control wysiwyg']) !!}
+        </div>
+
+        <div class="form-group">
             {!! Form::checkbox('is_visible', 1, old('is_visible'), ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
             {!! Form::label('is_visible', 'Is Visible', ['class' => 'form-check-label ml-3']) !!} {!! add_help(
                 'Hides the character from player view. Should only be used for certain mechanics, like uploading releases/adopts/raffles at the same time.',

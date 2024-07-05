@@ -681,6 +681,7 @@ class CharacterManager extends Service {
             $old['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $old['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
             $old['sex'] = $image->sex ? $image->sex : null;
+            $old['name'] = $image->name ? $image->name : null;
 
             // Clear old features
             $image->features()->delete();
@@ -697,6 +698,7 @@ class CharacterManager extends Service {
             $image->subtype_id = $data['subtype_id'] ?: null;
             $image->rarity_id = $data['rarity_id'];
             $image->sex = $data['sex'];
+            $image->name = $data['name'];
             $image->save();
 
             $new = [];
@@ -705,6 +707,7 @@ class CharacterManager extends Service {
             $new['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $new['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
             $new['sex'] = $image->sex ? $image->sex : null;
+            $new['name'] = $image->name ? $image->name : null;
 
             // Character also keeps track of these features
             $image->character->rarity_id = $image->rarity_id;
