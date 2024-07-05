@@ -60,7 +60,6 @@ class CharacterController extends Controller {
             'isMyo'            => false,
             'characterOptions' => CharacterLineageBlacklist::getAncestorOptions(),
             'stats'            => Stat::orderBy('name')->get(),
-            'character'        => $character,
         ]);
     }
 
