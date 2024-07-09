@@ -20,6 +20,9 @@
                 @if (Auth::check())
                     <li class="nav-item">
                     <a class="nav-link" href="{{ url('howtoplay/gettingstarted') }}">How To Play</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ url('howtoplay/gettingstarted') }}">Lore</a>
                     <li class="nav-item dropdown">
                         <a id="queueDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             Activities

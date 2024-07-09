@@ -71,9 +71,6 @@
             <div class="tab-pane fade" id="skills">
                 @include('character._tab_skills', ['character' => $character, 'skills' => $skills])
             </div>
-            <div class="tab-pane fade" id="skills">
-                @include('character._tab_skills', ['character' => $character, 'skills' => $skills])
-            </div>
             @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
                 <div class="tab-pane fade" id="settings-{{ $character->slug }}">
                     {!! Form::open(['url' => $character->is_myo_slot ? 'admin/myo/' . $character->id . '/settings' : 'admin/character/' . $character->slug . '/settings']) !!}
@@ -81,13 +78,18 @@
                         {!! Form::checkbox('is_visible', 1, $character->is_visible, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
                         {!! Form::label('is_visible', 'Is Visible', ['class' => 'form-check-label ml-3']) !!} {!! add_help('Turn this off to hide the character. Only mods with the Manage Masterlist power (that\'s you!) can view it - the owner will also not be able to see the character\'s page.') !!}
                     </div>
+                    @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-info btn-sm edit-stats" data-{{ $character->is_myo_slot ? 'id' : 'slug' }}="{{ $character->is_myo_slot ? $character->id : $character->slug }}"><i class="fas fa-cog"></i> Edit Stats</a>
+                        </div>
+                    @endif
                     <div class="text-right">
-                        {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
                     {!! Form::close() !!}
                     <hr />
                     <div class="text-right">
-                        <a href="#" class="btn btn-outline-danger btn-sm delete-character" data-slug="{{ $character->slug }}">Delete</a>
+                        <a href="#" class="btn btn-outline-danger btn-sm delete-character" data-slug="{{ $character->slug }}">Delete Character</a>
                     </div>
                 </div>
             @endif

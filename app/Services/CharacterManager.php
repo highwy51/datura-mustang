@@ -681,7 +681,6 @@ class CharacterManager extends Service {
             $old['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $old['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
             $old['sex'] = $image->sex ? $image->sex : null;
-            $old['name'] = $image->name ? $image->name : null;
 
             // Clear old features
             $image->features()->delete();
@@ -698,7 +697,6 @@ class CharacterManager extends Service {
             $image->subtype_id = $data['subtype_id'] ?: null;
             $image->rarity_id = $data['rarity_id'];
             $image->sex = $data['sex'];
-            $image->name = $data['name'];
             $image->save();
 
             $new = [];
@@ -1410,7 +1408,10 @@ class CharacterManager extends Service {
             $characterData['is_giftable'] = isset($data['is_giftable']);
             $characterData['sale_value'] = $data['sale_value'] ?? 0;
             $characterData['transferrable_at'] = $data['transferrable_at'] ?? null;
-            $characterData['name'] = (isset($data['name']) && $data['name']) ? $data['name'] : null;
+            if ($character->is_myo_slot) {
+                $characterData['name'] = (isset($data['name']) && $data['name']) ? $data['name'] : null;
+            }
+
 
 
             // Needs to be cleaned up

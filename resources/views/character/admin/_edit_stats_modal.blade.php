@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                {!! Form::label('Number') !!} {!! add_help('This number helps to identify the character and should preferably be unique either within the category, or among all characters.') !!}
+                {!! Form::label('ID') !!} {!! add_help('This number helps to identify the character and should preferably be unique either within the category, or among all characters.') !!}
                 {!! Form::text('number', $number, ['class' => 'form-control mr-2', 'id' => 'number']) !!}
             </div>
         </div>

@@ -236,7 +236,6 @@ class CharacterController extends Controller {
     public function postEditCharacterStats(Request $request, CharacterManager $service, $slug) {
         $request->validate(Character::$updateRules);
         $data = $request->only([
-            'name',
             'character_category_id', 'number', 'slug',
             'is_giftable', 'is_tradeable', 'is_sellable', 'sale_value',
             'transferrable_at',
