@@ -7,7 +7,6 @@
             <div class="dropdown-divider"></div>
 
             <div class="sidebar-item"><a href="{{ url('/howtoplay/gettingstarted') }}" class="{{ set_active('howtoplay/gettingstarted*') }}">Getting Started</a></div>
-            <div class="sidebar-item"><a href="{{ url('howtoplay/sitenav') }}" >Site Navigation</a></div>
             <div class="sidebar-item"><a href="{{ url('howtoplay/sitenav') }}" >Obtaining Daturas</a></div>
         </li>
 

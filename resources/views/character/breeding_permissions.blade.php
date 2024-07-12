@@ -13,31 +13,41 @@
 
 @include('character._header', ['character' => $character])
 
-@if(Auth::check() && (Auth::user()->id == $character->user_id))
+@if(Auth::check() && (Auth::user()->id == $character->user_id) && ($character->rarity->name == 'No Rarity') && ($character->category->name == 'Tracked'))
     <div class="text-right mb-4">
-        <a href="#" class="btn btn-success create-breeding-permission">Create New Slot</a>
+        <a href="#" class="btn btn-success create-breeding-permission">Observe Offspring</a>
     </div>
 @endif
 
 <p>
-    This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum observed offspring {{ $character->availableBreedingPermissions == 1 ? '' : '' }} available.
-    @if(Auth::check() && (Auth::user()->id == $character->user_id))
-        As the character's owner, you may grant other users up to this many observed offspring. Other users may see how many of this character's observed offspring have been used, and to whom they have been granted.
+    @if ($character->rarity->name == 'No Rarity')
+        @if ($character->category->name == 'Tracked')
+            This character has {{ $character->availableBreedingPermissions }} out of {{ $character->maxBreedingPermissions }} maximum observed offspring {{ $character->availableBreedingPermissions == 1 ? '' : '' }} available.
+                @if(Auth::check() && (Auth::user()->id == $character->user_id))
+                    As the character's owner, you may grant other users up to this many observed offspring. Other users may see how many of this character's observed offspring have been used, and to whom they have been granted.
+                @else
+                    Only the character's owner can create and distribute observed offspring spots.
+                @endif
+        @else
+            Characters must first be tracked in order to observe offspring.
+        @endif
     @else
-        Only the character's owner can create and distribute observed offspring spots.
+        This character is infertile. It is unable to have offspring to observe.
     @endif
 </p>
 
-@if($permissions->count())
-    {!! $permissions->render() !!}
+@if ($character->rarity->name == 'No Rarity' && ($character->category->name == 'Tracked'))
+    @if($permissions->count())
+        {!! $permissions->render() !!}
 
-    @foreach($permissions as $permission)
-        @include('character._breeding_permission', ['isCharacter' => true])
-    @endforeach
+        @foreach($permissions as $permission)
+            @include('character._breeding_permission', ['isCharacter' => true])
+        @endforeach
 
-    {!! $permissions->render() !!}
-@else
-    <p>No offspring found.</p>
+        {!! $permissions->render() !!}
+    @else
+        <p>No offspring found.</p>
+    @endif
 @endif
 
 @endsection

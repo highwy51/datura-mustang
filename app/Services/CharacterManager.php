@@ -1173,9 +1173,8 @@ class CharacterManager extends Service {
 
         try {
             // Perform additional checks
-            if($character->user_id != $user->id) throw new \Exception('Only this character\'s owner may create new breeding permissions.');
-            if($user->id == $data['recipient_id']) throw new \Exception('You cannot grant a breeding permission to yourself.');
-            if($character->availableBreedingPermissions < 1) throw new \Exception('This character may not have any more breeding permissions created.');
+            if($character->user_id != $user->id) throw new \Exception('Only this character\'s owner may create new observed offspring.');
+            if($character->availableBreedingPermissions < 1) throw new \Exception('This character may not have any more observed offspring.');
 
             // Create the permission itself
             $permission = BreedingPermission::create([
@@ -1185,10 +1184,10 @@ class CharacterManager extends Service {
                 'description' => $data['description']
             ]);
 
-            if(!$permission) throw new \Exception('Failed to create breeding permission.');
+            if(!$permission) throw new \Exception('Failed to create observed offspring.');
 
             // Create a log for the permission
-            if(!$this->createBreedingPermissionLog($user->id, $data['recipient_id'], $permission->id, 'Breeding Permission Granted', $data['type'].' Permission Created')) throw new \Exception('Failed to create log.');
+            if(!$this->createBreedingPermissionLog($user->id, $data['recipient_id'], $permission->id, 'Observed Offspring Granted', $data['type'].' Permission Created')) throw new \Exception('Failed to create log.');
 
             // Create a notification for the recipient
             Notifications::create('BREEDING_PERMISSION_GRANTED', $permission->recipient, [
@@ -1219,14 +1218,14 @@ class CharacterManager extends Service {
         DB::beginTransaction();
 
         try {
-            if(!$permission) throw new \Exception('Invalid breeding permission');
-            if($permission->is_used) throw new \Exception('This permission has already been used.');
+            if(!$permission) throw new \Exception('Invalid Observed Offspring');
+            if($permission->is_used) throw new \Exception('This observation has already been used.');
 
             // Update the permission
             $permission->update(['is_used' => 1]);
 
             // Create a log
-            if(!$this->createBreedingPermissionLog($user->id, null, $permission->id, 'Breeding Permission Marked Used', null)) throw new \Exception('Failed to create log.');
+            if(!$this->createBreedingPermissionLog($user->id, null, $permission->id, 'Observed Offspring Marked Used', null)) throw new \Exception('Failed to create log.');
 
             // Create notifications for both the character owner and recipient
             foreach([$character->user, $permission->recipient] as $notificationRecipient) {
@@ -1263,11 +1262,11 @@ class CharacterManager extends Service {
         DB::beginTransaction();
 
         try {
-            if(!$permission) throw new \Exception('Invalid breeding permission');
+            if(!$permission) throw new \Exception('Invalid Offspring Observation');
             if($permission->is_used) throw new \Exception('This permission has already been used.');
 
             if(!$recipient) throw new \Exception('Invalid recipient.');
-            if($recipient->id == $permission->recipient_id) throw new \Exception('Cannot transfer breeding permission; the current and selected recipient are the same.');
+            if($recipient->id == $permission->recipient_id) throw new \Exception('Cannot transfer offspring observation; the current and selected recipient are the same.');
 
             // It might be strange to allow transferral of breeding permissions back
             // to the character's original owner, but it also might come in handy.
@@ -1281,7 +1280,7 @@ class CharacterManager extends Service {
             $permission->update(['recipient_id' => $recipient->id]);
 
             // Create a log
-            if(!$this->createBreedingPermissionLog($oldRecipient->id, $recipient->id, $permission->id, 'Breeding Permission Transferred', 'Transferred by '.$user->displayName.($user->id != $oldRecipient->id ? ' (Admin Transfer)' : '' ))) throw new \Exception('Failed to create log.');
+            if(!$this->createBreedingPermissionLog($oldRecipient->id, $recipient->id, $permission->id, 'Observed Offspring Transferred', 'Transferred by '.$user->displayName.($user->id != $oldRecipient->id ? ' (Admin Transfer)' : '' ))) throw new \Exception('Failed to create log.');
 
             // If this is a forced/admin transfer, send the original recipient a notification
             if($user->id != $oldRecipient->id) {

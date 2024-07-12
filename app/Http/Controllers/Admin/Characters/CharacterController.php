@@ -462,6 +462,24 @@ class CharacterController extends Controller {
     }
 
     /**
+     * Shows the delete breeding slot modal.
+     *
+     * @param  string  $slug
+     * @param  int     $id
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getDeleteBreedingPermission($slug, $id)
+    {
+        $this->character = Character::where('slug', $slug)->first();
+        if(!$this->character) abort(404);
+
+        return view('character.admin._delete_breeding_permission', [
+            'character' => $this->character,
+            'breedingPermission' => BreedingPermission::find($id)
+        ]);
+    }
+
+    /**
      * Marks a breeding permission as used.
      *
      * @param  \Illuminate\Http\Request       $request
@@ -482,6 +500,27 @@ class CharacterController extends Controller {
         else {
             foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
         }
+        return redirect()->back();
+    }
+
+    /**
+     * Deletes a breeding slot.
+     *
+     * @param  \Illuminate\Http\Request       $request
+     * @param  App\Services\CharacterManager  $service
+     * @param  string                         $slug
+     * @param  int                            $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postDeleteBreedingPermission(Request $request, CharacterManager $service, $slug, $id)
+    {
+        $this->character = Character::where('slug', $slug)->first();
+        if(!$this->character) abort(404);
+
+        BreedingPermission::where('character_id', $this->character)
+           ->where('id', $id)
+           ->delete();
+
         return redirect()->back();
     }
 

@@ -14,11 +14,12 @@
                                 <a href="#" class="btn btn-sm btn-primary transfer-breeding-permission" data-id="{{ $permission->id }}" data-slug="{{ $character->slug }}">{{ Auth::user()->id != $permission->recipient_id && Auth::user()->hasPower('manage_characters') ? '(Admin)' : '' }} Transfer</a>
                             @endif
                             @if(Auth::user()->hasPower('manage_characters'))
-                                <a href="#" class="btn btn-sm btn-warning use-breeding-permission" data-id="{{ $permission->id }}" data-slug="{{ $character->slug }}">(Admin) Mark Used</a>
+                                <a href="#" class="btn btn-sm btn-warning use-breeding-permission" data-id="{{ $permission->id }}" data-slug="{{ $character->slug }}">(Admin) Mark Birthed</a>
+                                <a href="#" class="btn btn-sm btn-danger delete-breeding-permission" data-id="{{ $permission->id }}" data-slug="{{ $character->slug }}">X</a>
                             @endif
                         </div>
                     @endif
-                    Breeding Slot #{{ $permission->id }}
+                    Observed Offspring #{{ $permission->id }}
                     @if($permission->is_used)
                         (Used)
                     @endif
